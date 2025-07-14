@@ -39,24 +39,28 @@ h1,h2,h3,h4,ul,p{padding:0;margin:0}
 section{scroll-margin-top:280px;/* अपने navbar की height के हिसाब से एडजस्ट करें */
 }
 /* use css */
-nav.navbar.navbar-expand-lg{background:#151515 !important;position:fixed;top:0;left:0;right:0;margin:auto;border-bottom:1px solid #332b32;padding:20px 0 20px;z-index: 9;}
+nav.navbar.navbar-expand-lg{background:#151515 !important;position:fixed;top:0;left:0;right:0;margin:auto;border-bottom:1px solid #332b32;padding:20px 0 20px;z-index:9;}
 .contact .btn.btn-primary{border-radius:16px;}
-nav.navbar ul.navbar-nav li.nav-item .nav-link{font-size:18px;font-weight:500;color:#796B78;text-transform:uppercase;}
+nav.navbar ul.navbar-nav li.nav-item .nav-link{font-size:18px;font-weight:500;color:#fff;text-transform:uppercase;}
 nav.navbar ul.navbar-nav li.nav-item{margin-right:30px;}
-nav.navbar ul.navbar-nav li.nav-item .nav-link.inSection{color:#fff;background:url(../images/activeline.svg)center bottom no-repeat;}
-h2.hmTitle{font-size:20px;color:#796B78;font-weight:500;text-transform:uppercase;margin:0 0 35px;letter-spacing:2px;}
-h3.hmHeading{font-size:60px;font-weight:600;color:#D0ACA6;text-transform:uppercase;margin:0 0 5px;}
+nav.navbar ul.navbar-nav li.nav-item .nav-link.inSection{color:#4ff853;background:url(../images/activeline.svg)center bottom no-repeat;}
+h2.hmTitle{font-size:20px;color:#fff;font-weight:500;text-transform:uppercase;margin:0 0 35px;letter-spacing:2px;}
+h3.hmHeading{font-size:60px;font-weight:600;color:#CED3D6;text-transform:uppercase;margin:0 0 5px;}
 h3.hmHeading span{font-weight:700;font-style:italic;}
-h4.hmName{font-size:60px;color:#E888DE;text-transform:uppercase;font-weight:800;font-style:italic;margin:0 0 30px;}
-p.hmPara{font-size:18px;font-weight:400;color:#A899A7;line-height:28px;margin:0 0 10px;padding:0 70px 0 0;}
+h4.hmName{font-size:60px;color:#87B5BE;text-transform:uppercase;font-weight:800;font-style:italic;margin:0 0 30px;}
+p.hmPara{font-size:18px;font-weight:400;color:#CED3D6;line-height:28px;margin:0 0 10px;padding:0 70px 0 0;}
+.monetize ul li{position:relative;list-style:disc;color:#fff;margin:0 0 8px;}
+.monetize ul{padding:0 0 0 20px;}
+.monetize-numb ul li{position:relative;list-style:decimal;color:#fff;margin:0 0 8px;}
+.monetize-numb ul{padding:0 0 0 20px;}
 .btn{padding:13px 30px;border-radius:9px;border:none;}
-.btn.btn-primary{background:#E888DE;font-size:18px;font-weight:500;text-transform:uppercase;letter-spacing:1px;}
-.btn.btn-primary:hover,.btn.btn-primary:focus{background:#d578cb;color:#fff;}
-.btn.btn-secondary{background:#201B1F;font-size:18px;font-weight:500;color:#E888DE;text-transform:uppercase;}
+.btn.btn-primary{background:#4FF853;font-size:18px;font-weight:500;text-transform:uppercase;letter-spacing:1px;color:#002600;}
+.btn.btn-primary:hover,.btn.btn-primary:focus{background:#2DDB32;color:#002600;}
+.btn.btn-secondary{background:#201B1F;font-size:18px;font-weight:500;color:#4ff853;text-transform:uppercase;}
 .innvbx{display:flex;align-items:center;gap:20px;background:#212121;border-radius:8px;padding:24px 24px;width:48%;}
 .innvosec{flex-wrap:wrap;gap:15px;}
 .innvocnt h2{font-size:20px;font-family:'Inter';color:#EBE1EA;margin:0 0 10px;font-weight:500;}
-.innvocnt p{font-size:17px;font-weight:400;color:#A899A7;}
+.innvocnt p{font-size:17px;font-weight:400;color:#CED3D6;}
 .innvbx svg{width:50px;min-width:50px;}
 footer{background:#0C0C0C;margin:50px 0 0;padding:70px 0 40px;}
 .footlink h2{font-size:18px;text-transform:uppercase;color:#fff;font-weight:500;margin:0 0 20px;}
@@ -64,22 +68,21 @@ footer{background:#0C0C0C;margin:50px 0 0;padding:70px 0 40px;}
 .footlink ul li{margin:0 0 13px;}
 .footlink ul li a{font-size:16px;font-weight:500;color:#919191;}
 .footlink ul li a:hover,.footlink ul li a:focus{color:#fff;}
-.copyright{text-align:center;border-top:1px solid #272727;padding:40px 0 0;margin:30px 0 0;font-size:18px;font-weight:500;color:#796B78;}
+.copyright{text-align:center;border-top:1px solid #272727;padding:40px 0 0;margin:30px 0 0;font-size:18px;font-weight:500;color:#fff;}
 .copyright span{text-transform:uppercase;}
 /* .footnav .container{max-width:1300px;}
 */
 .contactform{max-width:600px;}
-.contactform label{font-size:17px;color:#796B78;font-weight:400;margin:0 0 5px;letter-spacing:2px;}
-.contactform input,.contactform textarea{width:100%;padding:14px 15px;background:#151515;font-size:15px;color:#ffffff;border:1px solid #796B78;border-radius:5px;}
+.contactform label{font-size:17px;color:#fff;font-weight:400;margin:0 0 5px;letter-spacing:2px;}
+.contactform input,.contactform textarea{width:100%;padding:14px 15px;background:#151515;font-size:15px;color:#ffffff;border:1px solid #fff;border-radius:5px;}
 .contactform textarea{height:120px;}
-.success{font-size:18px;color:#e888de;margin:0 0 30px;text-align:center;border:1px solid #e888de;padding:8px 5px;border-radius:6px;}
-.pinkLabel strong{color:#e888de;}
+.success{font-size:18px;color:#4ff853;margin:0 0 30px;text-align:center;border:1px solid #4ff853;padding:8px 5px;border-radius:6px;}
+.pinkLabel strong{color:#4ff853;}
 /* Fraud Tool Modal */
 .fraudToolModal .modal-dialog{max-width:900px;background:#000000;}
-
 .fraudicon{display:flex;align-items:center;justify-content:center;padding:0;background:#ffffff;width:80px;height:80px;margin:auto;border-radius:600px;}
 .fraudicon img{max-width:70px;}
-.fraudToolModal .modal-content{background:#fff;padding:25px 25px;border-radius:10px;border:none;width: 90%; max-width: 900px;}
+.fraudToolModal .modal-content{background:#fff;padding:25px 25px;border-radius:10px;border:none;width:90%;max-width:900px;}
 .fraudToolModal button.btn-close{position:absolute;right:-10px;top:-10px;width:30px;height:30px;background-color:#f44336;border-radius:60px;opacity:1;color:#fff;}
 .fraudToolModal button.btn-close:hover,.fraudToolModal button.btn-close:focus{outline:none;box-shadow:none;}
 .fraudHeading{text-align:center;font-family:'Open Sans';margin:10px 0 0;}
@@ -101,7 +104,7 @@ footer{background:#0C0C0C;margin:50px 0 0;padding:70px 0 40px;}
 .actionReq{margin:3px 0 0;text-align:center;background:#F7D65E;padding:5px 6px;border-radius:5px;}
 .actionReq strong{color:#f00000;font-size:15px;font-weight:600;}
 .actionReq p{font-size:13px;color:#000;margin:0;font-weight:400;}
-.thankcoop{margin: 10px 0 0;text-align:center;color:#36962d;display:flex;justify-content:center;gap:5px;align-items:center;font-size:17px;font-weight:400;}
+.thankcoop{margin:10px 0 0;text-align:center;color:#36962d;display:flex;justify-content:center;gap:5px;align-items:center;font-size:17px;font-weight:400;}
 .thankcoop svg{width:31px;}
 .checkmarkSelect{position:absolute;top:10px;right:10px;height:35px;width:35px;background-color:#ce68ce;border:1px solid #ce68ce;border-radius:40px;}
 .checkmarkSelect:before{content:'';left:14px;top:9px;width:6px;height:11px;border:solid white;border-width:0 2px 2px 0;transform:rotate(45deg);display:block;position:absolute;}
@@ -112,6 +115,38 @@ footer{background:#0C0C0C;margin:50px 0 0;padding:70px 0 40px;}
 .interruptionsBx ul li{width:32%;display:flex;align-items:center;justify-content:center;text-align:center;font-size:13px;color:#222222;line-height:17px;flex-direction:column;text-transform:capitalize;}
 .fraudiconbx img{max-width:30px;max-height:30px;object-fit:contain;}
 .fraudiconbx{width:60px;height:60px;border:1px solid #f44342;display:flex;align-items:center;justify-content:center;border-radius:200px;margin-bottom:11px;}
+.signupModal{width:90%;max-width:600px;background:#fff;padding:50px;border-radius:15px;margin:auto;box-shadow:0 0 45px 0 rgba(0,0,0,0.1);}
+.LoginBx{flex:1;background:#fff;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:15px;padding:30px 30px;border-radius:10px;}
+.login-box{width:100%;}
+.login-box h2{text-align:center;color:#000000;margin-bottom:30px;font-size:25px;font-weight:400;}
+.input-group{position:relative;margin-bottom:20px;}
+.input-group i{position:absolute;top:18px;left:21px;color:#4ef953;}
+.options a{font-size:14px;text-decoration:none;color:#474747;}
+.input-group input{width:100%;padding:15px 18px 15px 50px;border:none;border-radius:50px !important;background:#f1f1f1;outline:none;transition:0.3s;font-size:15px;color:#000;}
+.input-group input:focus{background:#eee;}
+.options{display:flex;justify-content:space-between;align-items:center;font-size:0.9em;margin-bottom:20px;}
+.checkbox-group{display:flex;align-items:center;font-size:0.9em;margin-bottom:0;text-align:left;}
+.checkbox-group input{margin-right:8px;accent-color:#4ff853;width:16px;height:16px;}
+.login-btn{width:100%;padding:12px;border:none;border-radius:60px;transition:0.3s;background:#4FF853;font-size:18px;font-weight:500;text-transform:uppercase;letter-spacing:1px;color:#002600;}
+.login-btn:hover{opacity:0.9;}
+.signupModal button.btn-close{position:absolute;right:-20px;top:-10px;z-index:5;width:35px;height:35px;background:#ffffff;opacity:1;color:#ec0000;border-radius:80px;box-shadow:0 0 32px 0 rgba(0,0,0,0.5);}
+.signupModal button.btn-close svg{width:18px;height:15px;}
+.signupModal button.btn-close i{font-size:22px;color:#f00000;}
+.signupModal .modal-dialog{max-width:700px;width:92%;}
+.signupModal .modal-content{border-radius:15px;border:none;}
+.logoLogin{padding:0 0 20px;text-align:center;}
+label.checkbox-group.agreebx{margin-bottom:20px;}
+.headDropdown .btn.btn-secondary{padding:0;color:#4ef953;width:40px;}
+.headDropdown .dropdown-menu li a{padding:8px 15px!important;text-align:left;}
+.headDropdown .dropdown-menu{    background: #000;padding:0;border:none;border-radius:0;}
+.headDropdown .btn.btn-secondary svg{width:19px;}
+.headDropdown .btn.btn-secondary:hover,.headDropdown .btn.btn-secondary:focus{outline:none;background:#000;}
+.headDropdown .dropdown-menu li a svg { width: 15px; }
+.headDropdown .dropdown-menu li a.active { color: #000 !important; }
+.headDropdown .btn.dropdown-toggle::after { vertical-align: middle; margin-top: 0px; }
+.dropdown.headDropdown {
+    margin-left: 15px;
+}
 /* Responsive */
 @media(min-width:1500px){.container{max-width:1440px;}
 }
@@ -144,13 +179,14 @@ nav.navbar ul.navbar-nav li.nav-item{margin-right:15px;}
 nav.navbar .container{position:relative;}
 ul.navbar-nav{margin:0!important;}
 .contact{margin-right:70px;}
+.navbar-light .navbar-toggler{background-color:#97e2f6;}
 .contact .btn.btn-primary{border-radius:6px;}
 .navbar-collapse{position:absolute;right:10px;top:50px;background:#fff;border-radius:5px;min-width:170px;}
-nav.navbar ul.navbar-nav li.nav-item{margin:0;border-bottom:1px solid #ccc;}
-nav.navbar ul.navbar-nav li.nav-item .nav-link{font-size:14px;padding:12px 16px;}
-nav.navbar ul.navbar-nav li.nav-item .nav-link.inSection { background: #e888de; color: #fff; }
+nav.navbar ul.navbar-nav li.nav-item{margin:0;border-bottom:1px solid #ccc;color:#000;}
+nav.navbar ul.navbar-nav li.nav-item .nav-link.inSection{background:#4ff853;color:#002600;}
+nav.navbar ul.navbar-nav li.nav-item .nav-link{font-size:14px;padding:12px 16px;color:#000;}
 nav.navbar ul.navbar-nav li.nav-item:last-child{border:none;}
-nav.navbar ul.navbar-nav li.nav-item .nav-link:hover,nav.navbar ul.navbar-nav li.nav-item .nav-link:focus,nav.navbar ul.navbar-nav li.nav-item .nav-link.active{color:#fff;background:#e888de;}
+nav.navbar ul.navbar-nav li.nav-item .nav-link:hover,nav.navbar ul.navbar-nav li.nav-item .nav-link:focus,nav.navbar ul.navbar-nav li.nav-item .nav-link.active{color:#000;background:#4ff853;}
 h2.hmTitle{font-size:17px;}
 h3.hmHeading{font-size:25px;}
 h4.hmName{font-size:25px;}
@@ -190,8 +226,7 @@ footer{padding:40px 0 10px;}
 .fraudicon img{max-width:60px;}
 .fraudHeading h2{font-size:22px;}
 .fraudHeading h2 svg{width:25px;}
-.interruptionsBx ul{        gap: 8px;
-    flex-direction: column;}
+.interruptionsBx ul{gap:8px;flex-direction:column;}
 .fraudiconbx{width:50px;height:50px;}
 .fraudiconbx img{max-width:20px;max-width:20px;}
 .blockersbx h4{font-size:16px;margin:0 0 15px;}
@@ -199,8 +234,13 @@ footer{padding:40px 0 10px;}
 .blockText h2{font-size:14px;}
 .blockText h3{font-size:14px;}
 .blockicons img{max-width:35px;max-height:35px;}
-.interruptionsBx ul li { width: 100%; margin: 0; flex-direction: row; justify-content: flex-start; align-items: center; text-align: left; gap: 8px; }
-.fraudiconbx { margin-bottom: 0; min-width: 40px; width: 40px; height: 40px;}
+.interruptionsBx ul li{width:100%;margin:0;flex-direction:row;justify-content:flex-start;align-items:center;text-align:left;gap:8px;}
+.fraudiconbx{margin-bottom:0;min-width:40px;width:40px;height:40px;}
+.signupModal .modal-dialog{margin:30px auto;}
+.signupModal button.btn-close{right:-2px;top:-8px;}
+.logoLogin{padding:10px 0 10px;}
+.login-btn{padding:10px 10px;font-size:15px;}
+.signupModal{padding:16px 20px;}
 }
 @media(max-width:575px){.innvbx{width:100%;}
 a.navbar-brand{max-width:140px;}
@@ -210,7 +250,6 @@ a.navbar-brand{max-width:140px;}
 .fraudHeading h2{font-size:15px;margin:0 0 6px;text-align:center;}
 .fraudHeading h3{padding:0;font-size:12px;line-height:18px;margin:0 0 12px;}
 .interruptionsBx ul{flex-wrap:wrap;justify-content:center;}
-
 .fraudicon{width:60px;height:60px;}
 .fraudicon img{max-width:45px;}
 .fraudHeading{margin:0;}
@@ -228,4 +267,14 @@ a.navbar-brand{max-width:140px;}
 .blockicons img{max-width:25px;max-height:25px;}
 .blockersbx h4{font-size:15px;margin:0 0 4px;}
 .fraudToolModal button.btn-close{right:-6px;top:-15px;width:25px;height:25px;}
+.login-box h2{font-size:20px;}
+.logoLogin img{max-width:150px;}
+.signupModal .modal-body{padding:15px 15px;}
+}
+@media(max-width:480px){.contact .btn.btn-primary{padding:8px 7px;font-size:10px;border-radius:3px;}
+.navbar-light .navbar-toggler{padding:1px 3px;}
+a.navbar-brand img{max-width:111px;}
+.contact{margin-right:40px;}
+.menuNav{gap:1px !important;}
+.menuNav li a{padding:5px 4px !important;font-size:11px!important;}
 }

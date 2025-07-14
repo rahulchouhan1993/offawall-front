@@ -18,6 +18,107 @@ use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
 class DashboardController extends Controller
 {
+
+    public function login(Request $request){
+        $offerSettings = Setting::find(1);
+        $advertiserDetails = Setting::find(1);
+        
+        $appDetails = App::where('appId',$request->wallId)->where('status',1)->first();
+        $offerWallTemplate = Template::where('app_id',$appDetails->id)->first();
+        if(empty($offerWallTemplate)){
+            $offerWallTemplate = Template::find(1);
+        }
+        $requestedParams = $request->all();
+        if(!isset($requestedParams['userId'])){
+            $requestedParams['userId'] = 0;
+        }
+        if(!isset($requestedParams['sub4'])){
+            $requestedParams['sub4'] = NULL;
+        }
+        if(!isset($requestedParams['sub5'])){
+            $requestedParams['sub5'] = NULL;
+        }
+        if(!isset($requestedParams['sub6'])){
+            $requestedParams['sub6'] = NULL;
+        }
+        return view('login',compact('offerWallTemplate','appDetails','requestedParams','offerSettings'));
+    }
+
+    public function register(Request $request){
+        $offerSettings = Setting::find(1);
+        $advertiserDetails = Setting::find(1);
+        
+        $appDetails = App::where('appId',$request->wallId)->where('status',1)->first();
+        $offerWallTemplate = Template::where('app_id',$appDetails->id)->first();
+        if(empty($offerWallTemplate)){
+            $offerWallTemplate = Template::find(1);
+        }
+        $requestedParams = $request->all();
+        if(!isset($requestedParams['userId'])){
+            $requestedParams['userId'] = 0;
+        }
+        if(!isset($requestedParams['sub4'])){
+            $requestedParams['sub4'] = NULL;
+        }
+        if(!isset($requestedParams['sub5'])){
+            $requestedParams['sub5'] = NULL;
+        }
+        if(!isset($requestedParams['sub6'])){
+            $requestedParams['sub6'] = NULL;
+        }
+        return view('register',compact('offerWallTemplate','appDetails','requestedParams','offerSettings'));
+    }
+
+    public function forgotPassword(Request $request){
+        $offerSettings = Setting::find(1);
+        $advertiserDetails = Setting::find(1);
+        
+        $appDetails = App::where('appId',$request->wallId)->where('status',1)->first();
+        $offerWallTemplate = Template::where('app_id',$appDetails->id)->first();
+        if(empty($offerWallTemplate)){
+            $offerWallTemplate = Template::find(1);
+        }
+        $requestedParams = $request->all();
+        if(!isset($requestedParams['userId'])){
+            $requestedParams['userId'] = 0;
+        }
+        if(!isset($requestedParams['sub4'])){
+            $requestedParams['sub4'] = NULL;
+        }
+        if(!isset($requestedParams['sub5'])){
+            $requestedParams['sub5'] = NULL;
+        }
+        if(!isset($requestedParams['sub6'])){
+            $requestedParams['sub6'] = NULL;
+        }
+        return view('forgot-password',compact('offerWallTemplate','appDetails','requestedParams','offerSettings'));
+    }
+
+    public function tickets(Request $request){
+        $offerSettings = Setting::find(1);
+        $advertiserDetails = Setting::find(1);
+        
+        $appDetails = App::where('appId',$request->wallId)->where('status',1)->first();
+        $offerWallTemplate = Template::where('app_id',$appDetails->id)->first();
+        if(empty($offerWallTemplate)){
+            $offerWallTemplate = Template::find(1);
+        }
+        $requestedParams = $request->all();
+        if(!isset($requestedParams['userId'])){
+            $requestedParams['userId'] = 0;
+        }
+        if(!isset($requestedParams['sub4'])){
+            $requestedParams['sub4'] = NULL;
+        }
+        if(!isset($requestedParams['sub5'])){
+            $requestedParams['sub5'] = NULL;
+        }
+        if(!isset($requestedParams['sub6'])){
+            $requestedParams['sub6'] = NULL;
+        }
+        return view('tickets',compact('offerWallTemplate','appDetails','requestedParams','offerSettings'));
+    }
+
     public function index(Request $request){
         $userCountry = $this->getUserCountry(request()->ip());
         $allBlockers = $this->GetBlockers($userCountry);
@@ -702,6 +803,18 @@ class DashboardController extends Controller
             $offerWallTemplate = Template::find(1);
         }
         $requestedParams = $request->all();
+        if(!isset($requestedParams['userId'])){
+            $requestedParams['userId'] = 0;
+        }
+        if(!isset($requestedParams['sub4'])){
+            $requestedParams['sub4'] = NULL;
+        }
+        if(!isset($requestedParams['sub5'])){
+            $requestedParams['sub5'] = NULL;
+        }
+        if(!isset($requestedParams['sub6'])){
+            $requestedParams['sub6'] = NULL;
+        }
         return view('completedoffers',compact('allOffers','offerWallTemplate','appDetails','requestedParams','offerSettings'));
         
     }

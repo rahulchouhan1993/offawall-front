@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OfferwallXXX | Content Unavailable</title>
+    <title>Offawall | Content Unavailable</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -29,13 +29,13 @@
         a {
             display: inline-block;
             padding: 10px 20px;
-            background: #E888DE;
+            background: #4ef953;
             color: white;
             text-decoration: none;
             border-radius: 5px;
         }
         a:hover {
-            background: #E888DE;
+            background: #4ef953;
         }
     </style>
 </head>
