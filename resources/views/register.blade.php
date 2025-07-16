@@ -115,14 +115,14 @@
             </a>
             <div style="display: flex ; align-items: center; justify-content: space-between; padding: 3px 5px; background:{{ $offerWallTemplate->headerMenuBg }}">
                <ul class="menuNav" style="display: flex; align-items: center; justify-content: start; gap: 10px; padding: 0; margin: 0; list-style: none;">
-                  <li>
-                     <a  href="{{ route('offerwall-demo', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
+                   <li>
+                     <a  href="{{ route('offerwall', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
                         style="display: block; padding: 14px 10px; font-size: 15px; color: {{ $offerWallTemplate->headerNonActiveTextColor }}; border-bottom: 1px solid transparent; text-decoration: none;font-family: Open Sans;">
                      Offers
                      </a>
                   </li>
                   <li>
-                     <a href="{{ route('completedOffers-demo', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
+                     <a href="{{ route('completedOffers', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
                         style="display: block; padding: 14px 10px; font-size: 15px; color: {{ $offerWallTemplate->headerNonActiveTextColor }}; border-bottom: 1px solid transparent; text-decoration: none;font-family: Open Sans;">
                      My Rewards
                      </a>
@@ -136,6 +136,7 @@
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22H4ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13Z"></path></svg>
                    </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  @guest
                   <li>
                      <a href="{{ route('login', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
                         style="display: block; padding: 14px 10px; font-size: 15px; color: {{ $offerWallTemplate->headerNonActiveTextColor }}; border-bottom: 1px solid transparent; text-decoration: none;font-family: Open Sans;">
@@ -149,13 +150,21 @@
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10 11V8L15 12L10 16V13H1V11H10ZM2.4578 15H4.58152C5.76829 17.9318 8.64262 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C8.64262 4 5.76829 6.06817 4.58152 9H2.4578C3.73207 4.94289 7.52236 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C7.52236 22 3.73207 19.0571 2.4578 15Z"></path></svg> Register
                      </a>
                   </li>
-
+                  @endguest
                   <li>
                      <a href="{{ route('tickets', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
                         style="display: block; padding: 14px 10px; font-size: 15px; color: {{ $offerWallTemplate->headerNonActiveTextColor }}; border-bottom: 1px solid transparent; text-decoration: none;font-family: Open Sans;">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M2.00488 9.49979V3.99979C2.00488 3.4475 2.4526 2.99979 3.00488 2.99979H21.0049C21.5572 2.99979 22.0049 3.4475 22.0049 3.99979V9.49979C20.6242 9.49979 19.5049 10.6191 19.5049 11.9998C19.5049 13.3805 20.6242 14.4998 22.0049 14.4998V19.9998C22.0049 20.5521 21.5572 20.9998 21.0049 20.9998H3.00488C2.4526 20.9998 2.00488 20.5521 2.00488 19.9998V14.4998C3.38559 14.4998 4.50488 13.3805 4.50488 11.9998C4.50488 10.6191 3.38559 9.49979 2.00488 9.49979ZM4.00488 7.96755C5.4866 8.7039 6.50488 10.2329 6.50488 11.9998C6.50488 13.7666 5.4866 15.2957 4.00488 16.032V18.9998H20.0049V16.032C18.5232 15.2957 17.5049 13.7666 17.5049 11.9998C17.5049 10.2329 18.5232 8.7039 20.0049 7.96755V4.99979H4.00488V7.96755ZM9.00488 8.99979H15.0049V10.9998H9.00488V8.99979ZM9.00488 12.9998H15.0049V14.9998H9.00488V12.9998Z"></path></svg> Tickets
                      </a>
                   </li>
+                  @auth
+                  <li>
+                     <a href="{{ route('logout', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
+                        style="display: block; padding: 14px 10px; font-size: 15px; color: {{ $offerWallTemplate->headerNonActiveTextColor }}; border-bottom: 1px solid transparent; text-decoration: none;font-family: Open Sans;">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M2.00488 9.49979V3.99979C2.00488 3.4475 2.4526 2.99979 3.00488 2.99979H21.0049C21.5572 2.99979 22.0049 3.4475 22.0049 3.99979V9.49979C20.6242 9.49979 19.5049 10.6191 19.5049 11.9998C19.5049 13.3805 20.6242 14.4998 22.0049 14.4998V19.9998C22.0049 20.5521 21.5572 20.9998 21.0049 20.9998H3.00488C2.4526 20.9998 2.00488 20.5521 2.00488 19.9998V14.4998C3.38559 14.4998 4.50488 13.3805 4.50488 11.9998C4.50488 10.6191 3.38559 9.49979 2.00488 9.49979ZM4.00488 7.96755C5.4866 8.7039 6.50488 10.2329 6.50488 11.9998C6.50488 13.7666 5.4866 15.2957 4.00488 16.032V18.9998H20.0049V16.032C18.5232 15.2957 17.5049 13.7666 17.5049 11.9998C17.5049 10.2329 18.5232 8.7039 20.0049 7.96755V4.99979H4.00488V7.96755ZM9.00488 8.99979H15.0049V10.9998H9.00488V8.99979ZM9.00488 12.9998H15.0049V14.9998H9.00488V12.9998Z"></path></svg> Logout
+                     </a>
+                  </li>
+                  @endauth
                </ul>
                </div>
             </div>
@@ -163,37 +172,55 @@
          <div style="display: flex ; height: 100%;  padding-bottom: 60px; align-items: start; width: 100%; flex-direction: column; font-family: Open Sans; background-color:{{ $offerWallTemplate->bodyBg }}">
             
           <div class="signupModal ">
-               <form method="post">
+            @if ($errors->any())
+               <div class="alert alert-danger">
+                  <ul>
+                     @foreach ($errors->all() as $error)
+                           <li>{{ $error }}</li>
+                     @endforeach
+                  </ul>
+               </div>
+            @endif
+               <form id="registerForm" action="{{route('store.user')}}" method="post">
+                  @csrf
                   <div class="logoLogin">
                      <img src="images/logo.png" alt="img">
                   </div>
+                  <input type="hidden" name="apiKey" value="{{ old('apiKey', $requestedParams['apiKey'] ?? '') }}">
+                  <input type="hidden" name="wallId" value="{{ old('wallId', $requestedParams['wallId'] ?? '') }}">
+                  <input type="hidden" name="userId" value="{{ old('userId', $requestedParams['userId'] ?? '') }}">
+                  <input type="hidden" name="sub4" value="{{ old('sub4', $requestedParams['sub4'] ?? '') }}">
+                  <input type="hidden" name="sub5" value="{{ old('sub5', $requestedParams['sub5'] ?? '') }}">
+                  <input type="hidden" name="sub6" value="{{ old('sub6', $requestedParams['sub6'] ?? '') }}">
+
+                  
                   <div class="login-box">
                   <h2>Create Account to get started!</h2>
 
                      <div class="input-group">
                   <i class="fas fa-user"></i>
-                  <input type="text" placeholder="Full Name">
+                  <input type="text" name="name" placeholder="Full Name" value="{{ old('name')}}" required>
                   </div>
 
                   <div class="input-group">
                   <i class="fas fa-envelope"></i>
-                  <input type="email" placeholder="Email">
+                  <input type="email" name="email" placeholder="Email" value="{{ old('email')}}" required>
                   </div>
 
 
                   <div class="input-group">
                   <i class="fas fa-lock"></i>
-                  <input type="password" placeholder="Password">
+                  <input type="password" name="password" placeholder="Password" value="{{ old('password')}}" required>
                   </div>
 
                   <div class="input-group">
                      <i class="fas fa-lock"></i>
-                     <input type="password" placeholder="Confirm Password">
+                     <input type="password" name="password_confirmation" value="{{ old('password_confirmation')}}" placeholder="Confirm Password" required>
                   </div>
                      <label class="checkbox-group agreebx">
-                        <input type="checkbox"> I agree to the Terms &amp; Conditions
+                        <input type="checkbox" name="terms"> I agree to the Terms &amp; Conditions
                      </label>
-                  <button class="login-btn">SIGN UP</button>
+                  <button type="submit" class="login-btn">SIGN UP</button>
                </div>
                </form>
             </div>
