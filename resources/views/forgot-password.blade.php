@@ -166,17 +166,41 @@
          <div style="display: flex ; height: 100%;  padding-bottom: 60px; align-items: start; width: 100%; flex-direction: column; font-family: Open Sans; background-color:{{ $offerWallTemplate->bodyBg }}">
 
             <div class="signupModal">
-               <form method="post">
+               <form method="post" action="{{route('sendForgotPasswordMail')}}">
+                  @csrf
+                  @if(session('success'))
+                     <div class="alert alert-success">
+                        {{ session('success') }}
+                     </div>
+                  @endif
+
+                  @if ($errors->any())
+                     <div class="alert alert-danger">
+                        <ul>
+                           @foreach ($errors->all() as $error)
+                                 <li>{{ $error }}</li>
+                           @endforeach
+                        </ul>
+                     </div>
+                  @endif
+
                   <div class="logoLogin">
                      <img src="images/logo.png" alt="img">
                   </div>
+
+                  <input type="hidden" name="apiKey" value="{{ old('apiKey', $requestedParams['apiKey'] ?? '') }}">
+                  <input type="hidden" name="wallId" value="{{ old('wallId', $requestedParams['wallId'] ?? '') }}">
+                  <input type="hidden" name="userId" value="{{ old('userId', $requestedParams['userId'] ?? '') }}">
+                  <input type="hidden" name="sub4" value="{{ old('sub4', $requestedParams['sub4'] ?? '') }}">
+                  <input type="hidden" name="sub5" value="{{ old('sub5', $requestedParams['sub5'] ?? '') }}">
+                  <input type="hidden" name="sub6" value="{{ old('sub6', $requestedParams['sub6'] ?? '') }}">
 
                   <div class="login-box">
                      <h2>Enter your registered email with us!</h2>
 
                   <div class="input-group">
                      <i class="fas fa-envelope"></i>
-                     <input type="email" placeholder="Email">
+                     <input type="email" name="email" value="{{old('email')}}" placeholder="Email">
                   </div>
                   
                   

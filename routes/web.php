@@ -21,9 +21,12 @@ Route::match(['get','post'],'/register',[DashboardController::class,'register'])
 Route::match(['get','post'],'/forgot-password',[DashboardController::class,'forgotPassword'])->name('forgotPassword');
 Route::get('/tickets',[DashboardController::class,'tickets'])->name('tickets');
 
+Route::post('/send-forgot-password-mail',[AuthController::class,'sendForgotPasswordMail'])->name('sendForgotPasswordMail');
+
 Route::match(['get','post'],'/logout',[AuthController::class,'logout'])->name('logout');
 
 
+Route::get('/email-verify',[AuthController::class,'emailVerify'])->name('email-verify');
 Route::post('/store-user',[AuthController::class,'register'])->name('store.user');
 Route::post('/login-user',[AuthController::class,'login'])->name('loginUser');
 
