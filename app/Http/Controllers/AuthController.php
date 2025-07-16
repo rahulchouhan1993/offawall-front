@@ -32,8 +32,6 @@ class AuthController extends Controller
             'status' => 1
         ]);
 
-        // event(new Registered($user));
-
         return redirect()->route('login', [
             'apiKey' => $request->apiKey,
             'wallId' => $request->wallId,
