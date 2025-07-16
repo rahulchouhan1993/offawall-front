@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 
@@ -19,5 +20,13 @@ Route::match(['get','post'],'/login',[DashboardController::class,'login'])->name
 Route::match(['get','post'],'/register',[DashboardController::class,'register'])->name('register');
 Route::match(['get','post'],'/forgot-password',[DashboardController::class,'forgotPassword'])->name('forgotPassword');
 Route::get('/tickets',[DashboardController::class,'tickets'])->name('tickets');
+
+Route::match(['get','post'],'/logout',[AuthController::class,'logout'])->name('logout');
+
+
+Route::post('/store-user',[AuthController::class,'register'])->name('store.user');
+Route::post('/login-user',[AuthController::class,'login'])->name('loginUser');
+
+
 
 
