@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ForgotPasswordMail;
+use App\Mail\UserRegisteredMail;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -24,7 +29,7 @@ class AuthController extends Controller
                          ->withInput($request->all());
         }
 
-        User::create([
+        $user = User::create([
             'name'     => $request->name,
             'email'    => $request->email,
             'password' => Hash::make($request->password),
@@ -32,7 +37,7 @@ class AuthController extends Controller
             'status' => 1
         ]);
 
-        // event(new Registered($user));
+        Mail::to($user->email)->send(new UserRegisteredMail($user, $request->apiKey, $request->wallId, $request->userId, $request->sub4, $request->sub5, $request->sub6));
 
         return redirect()->route('login', [
             'apiKey' => $request->apiKey,
@@ -105,4 +110,66 @@ class AuthController extends Controller
         ])->with('success','Logged Out.');
     }
 
+    public function emailVerify(Request $request){
+        $user = User::where('id',$request->user_id)->first();
+
+        if(empty($user)){
+            return redirect()->back()->withErrors(['email' => 'User not found.'])->withInput($request->all());;
+        }
+
+        if(!empty($user->email_verified_at)){
+            return redirect()->route('login', [
+                'apiKey' => $request->apiKey,
+                'wallId' => $request->wallId,
+                'userId' => $request->userId,
+                'sub4' => $request->sub4,
+                'sub5' => $request->sub5,
+                'sub6' => $request->sub6
+            ])->with('success','Email Already Verified.');
+            // return redirect()->back()
+            //             ->withErrors(['user_id' => 'User not found.'])
+            //             ->withInput($request->all());
+        }
+
+        $user->email_verified_at = Carbon::now()->format('Y-m-d H:i:s');
+        $user->update();
+
+        return redirect()->route('login', [
+            'apiKey' => $request->apiKey,
+            'wallId' => $request->wallId,
+            'userId' => $request->userId,
+            'sub4' => $request->sub4,
+            'sub5' => $request->sub5,
+            'sub6' => $request->sub6
+        ])->with('success','Email Verified.');
+    }
+
+    public function sendForgotPasswordMail(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email'    => ['required', 'email']
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                            ->withErrors($validator)
+                            ->withInput($request->all());
+        }
+
+        $user = User::where('email',$request->email)->whereNotNull('email_verified_at')->first();
+
+        if(empty($user)){
+            return redirect()->back()
+                ->withErrors(['email' => "Either user is not verified or not exist."])
+                ->withInput($request->all());
+        }
+
+        $newPassword = Str::random(14);
+        $user->password = Hash::make($newPassword);
+        $user->update();
+
+        Mail::to($user->email)->send(new ForgotPasswordMail($user, $request->apiKey, $request->wallId, $request->userId, $request->sub4, $request->sub5, $request->sub6,$newPassword));
+
+
+        return redirect()->back()->with('success','We have send you a mail to reset your password.');
+    }
 }

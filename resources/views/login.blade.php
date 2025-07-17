@@ -215,9 +215,6 @@
                      <input type="password"  name="password" value="{{old('password')}}" placeholder="Password">
                   </div>
                   <div class="options">
-                     <label class="checkbox-group">
-                     <input type="checkbox"> Remember
-                  </label>
                   <a href="{{ route('forgotPassword', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}">Forgot password?</a>
                   </div>
                   <button type="submit" class="login-btn">Login</button>
