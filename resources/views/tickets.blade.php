@@ -97,12 +97,19 @@
          .logo img { max-width:100px!important;}
          }
       </style>
+      <!-- Include Bootstrap CSS (required by Summernote) -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Include Summernote CSS -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.css" rel="stylesheet">
+
    </head>
    @php
       use App\Models\Tracking;
       $skipDuplicate = [];
    @endphp
    <body>
+     <body>
       <!-- Static page -->
       <div style=" width: 100%;height: 100%;">
          <div style="display: flex ; flex-wrap: wrap; align-items: center; width: 100%; background: {{ $offerWallTemplate->headerBg }}; padding: 15px 15px; justify-content: space-between;">
@@ -112,13 +119,13 @@
             <div style="display: flex ; align-items: center; justify-content: space-between; padding: 3px 5px; background:{{ $offerWallTemplate->headerMenuBg }}">
                <ul class="menuNav" style="display: flex; align-items: center; justify-content: start; gap: 10px; padding: 0; margin: 0; list-style: none;">
                   <li>
-                     <a  href="{{ route('offerwall-demo', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
+                     <a  href="{{ route('offerwall', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
                         style="display: block; padding: 14px 10px; font-size: 15px; color: {{ $offerWallTemplate->headerNonActiveTextColor }}; border-bottom: 1px solid transparent; text-decoration: none;font-family: Open Sans;">
                      Offers
                      </a>
                   </li>
                   <li>
-                     <a href="{{ route('completedOffers-demo', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
+                     <a href="{{ route('completedOffers', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
                         style="display: block; padding: 14px 10px; font-size: 15px; color: {{ $offerWallTemplate->headerNonActiveTextColor }}; border-bottom: 1px solid transparent; text-decoration: none;font-family: Open Sans;">
                      My Rewards
                      </a>
@@ -140,15 +147,15 @@
                   </li>
 
                   <li>
-                     <a class="active" href="{{ route('register', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
-                        style="display: block; padding: 14px 10px; font-size: 15px; border-bottom: 1px solid transparent; text-decoration: none;font-family: Open Sans; background: {{ $offerWallTemplate->headerActiveBg }}">
+                     <a href="{{ route('register', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
+                        style="display: block; padding: 14px 10px; font-size: 15px; color: {{ $offerWallTemplate->headerNonActiveTextColor }}; border-bottom: 1px solid transparent; text-decoration: none;font-family: Open Sans;">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10 11V8L15 12L10 16V13H1V11H10ZM2.4578 15H4.58152C5.76829 17.9318 8.64262 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C8.64262 4 5.76829 6.06817 4.58152 9H2.4578C3.73207 4.94289 7.52236 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C7.52236 22 3.73207 19.0571 2.4578 15Z"></path></svg> Register
                      </a>
                   </li>    
 
                   <li>
-                     <a href="{{ route('tickets', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
-                        style="display: block; padding: 14px 10px; font-size: 15px; color: {{ $offerWallTemplate->headerNonActiveTextColor }}; border-bottom: 1px solid transparent; text-decoration: none;font-family: Open Sans;">
+                     <a class="active" href="{{ route('tickets', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
+                        style="display: block; padding: 14px 10px; font-size: 15px; border-bottom: 1px solid transparent; text-decoration: none;font-family: Open Sans; background: {{ $offerWallTemplate->headerActiveBg }}">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M2.00488 9.49979V3.99979C2.00488 3.4475 2.4526 2.99979 3.00488 2.99979H21.0049C21.5572 2.99979 22.0049 3.4475 22.0049 3.99979V9.49979C20.6242 9.49979 19.5049 10.6191 19.5049 11.9998C19.5049 13.3805 20.6242 14.4998 22.0049 14.4998V19.9998C22.0049 20.5521 21.5572 20.9998 21.0049 20.9998H3.00488C2.4526 20.9998 2.00488 20.5521 2.00488 19.9998V14.4998C3.38559 14.4998 4.50488 13.3805 4.50488 11.9998C4.50488 10.6191 3.38559 9.49979 2.00488 9.49979ZM4.00488 7.96755C5.4866 8.7039 6.50488 10.2329 6.50488 11.9998C6.50488 13.7666 5.4866 15.2957 4.00488 16.032V18.9998H20.0049V16.032C18.5232 15.2957 17.5049 13.7666 17.5049 11.9998C17.5049 10.2329 18.5232 8.7039 20.0049 7.96755V4.99979H4.00488V7.96755ZM9.00488 8.99979H15.0049V10.9998H9.00488V8.99979ZM9.00488 12.9998H15.0049V14.9998H9.00488V12.9998Z"></path></svg> Tickets
                      </a>
                   </li>
@@ -474,7 +481,118 @@
                                 </div>
                             </div>
 
+                            <div class="text-left">
+                                <div
+                                    class="chatwindowMsg relative inline-block bg-gray-100 p-[12px] lg:text-[15px]  text-sm  shadow-md rounded-[10px] rounded-tl-[0]">
+                                    <div
+                                        class="absolute  top-2 left-[-15px] w-0 h-0 border-t-[15px] border-t-transparent border-b-[15px] border-b-transparent border-r-[15px] border-r-gray-100">
+                                    </div>
+                                    <p class="text-[12px] xl:text-[13px]">
+                                        Here are all the files. Let me know once you’ve had a look. once you’ve had a look. once you’ve
+                                        had a look.
+                                    </p>
 
+                                    <div class="chatWindowDate">
+                                        11/July/2025 <div class="text-[12px] text-black font-[600]">10:40 PM</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-left">
+                                <div
+                                    class="chatwindowMsg relative inline-block bg-gray-100 p-[12px] lg:text-[15px]  text-sm  shadow-md rounded-[10px] rounded-tl-[0]">
+                                    <div
+                                        class="absolute  top-2 left-[-15px] w-0 h-0 border-t-[15px] border-t-transparent border-b-[15px] border-b-transparent border-r-[15px] border-r-gray-100">
+                                    </div>
+                                    <p class="text-[12px] xl:text-[13px]">
+                                        Here are all the files. Let me know once you’ve had a look. once you’ve had a look. once you’ve
+                                        had a look.
+                                    </p>
+
+                                    <div class="chatWindowDate">
+                                        11/July/2025 <div class="text-[12px] text-black font-[600]">10:40 PM</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-left">
+                                <div
+                                    class="chatwindowMsg relative inline-block bg-gray-100 p-[12px] lg:text-[15px]  text-sm  shadow-md rounded-[10px] rounded-tl-[0]">
+                                    <div
+                                        class="absolute  top-2 left-[-15px] w-0 h-0 border-t-[15px] border-t-transparent border-b-[15px] border-b-transparent border-r-[15px] border-r-gray-100">
+                                    </div>
+                                    <p class="text-[12px] xl:text-[13px]">
+                                        Here are all the files. Let me know once you’ve had a look. once you’ve had a look. once you’ve
+                                        had a look.
+                                    </p>
+
+                                    <div class="chatWindowDate">
+                                        11/July/2025 <div class="text-[12px] text-black font-[600]">10:40 PM</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-left">
+                                <div
+                                    class="chatwindowMsg relative inline-block bg-gray-100 p-[12px] lg:text-[15px]  text-sm  shadow-md rounded-[10px] rounded-tl-[0]">
+                                    <div
+                                        class="absolute  top-2 left-[-15px] w-0 h-0 border-t-[15px] border-t-transparent border-b-[15px] border-b-transparent border-r-[15px] border-r-gray-100">
+                                    </div>
+                                    <p class="text-[12px] xl:text-[13px]">
+                                        Here are all the files. Let me know once you’ve had a look. once you’ve had a look. once you’ve
+                                        had a look.
+                                    </p>
+
+                                    <div class="chatWindowDate">
+                                        11/July/2025 <div class="text-[12px] text-black font-[600]">10:40 PM</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-left">
+                                <div
+                                    class="chatwindowMsg relative inline-block bg-gray-100 p-[12px] lg:text-[15px]  text-sm  shadow-md rounded-[10px] rounded-tl-[0]">
+                                    <div
+                                        class="absolute  top-2 left-[-15px] w-0 h-0 border-t-[15px] border-t-transparent border-b-[15px] border-b-transparent border-r-[15px] border-r-gray-100">
+                                    </div>
+                                    <p class="text-[12px] xl:text-[13px]">
+                                        Here are all the files. Let me know once you’ve had a look. once you’ve had a look. once you’ve
+                                        had a look.
+                                    </p>
+
+                                    <div class="chatWindowDate">
+                                        11/July/2025 <div class="text-[12px] text-black font-[600]">10:40 PM</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-left">
+                                <div
+                                    class="chatwindowMsg relative inline-block bg-gray-100 p-[12px] lg:text-[15px]  text-sm  shadow-md rounded-[10px] rounded-tl-[0]">
+                                    <div
+                                        class="absolute  top-2 left-[-15px] w-0 h-0 border-t-[15px] border-t-transparent border-b-[15px] border-b-transparent border-r-[15px] border-r-gray-100">
+                                    </div>
+                                    <p class="text-[12px] xl:text-[13px]">
+                                        Here are all the files. Let me know once you’ve had a look. once you’ve had a look. once you’ve
+                                        had a look.
+                                    </p>
+
+                                    <div class="chatWindowDate">
+                                        11/July/2025 <div class="text-[12px] text-black font-[600]">10:40 PM</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-left">
+                                <div
+                                    class="chatwindowMsg relative inline-block bg-gray-100 p-[12px] lg:text-[15px]  text-sm  shadow-md rounded-[10px] rounded-tl-[0]">
+                                    <div
+                                        class="absolute  top-2 left-[-15px] w-0 h-0 border-t-[15px] border-t-transparent border-b-[15px] border-b-transparent border-r-[15px] border-r-gray-100">
+                                    </div>
+                                    <p class="text-[12px] xl:text-[13px]">
+                                        Here are all the files. Let me know once you’ve had a look. once you’ve had a look. once you’ve
+                                        had a look.
+                                    </p>
+
+                                    <div class="chatWindowDate">
+                                        11/July/2025 <div class="text-[12px] text-black font-[600]">10:40 PM</div>
+                                    </div>
+                                </div>
+                            </div>
 
 
                             <div class="text-right">
