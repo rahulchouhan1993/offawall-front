@@ -103,7 +103,6 @@
       $skipDuplicate = [];
    @endphp
    <body>
-     <body>
       <!-- Static page -->
       <div style=" width: 100%;height: 100%;">
          <div style="display: flex ; flex-wrap: wrap; align-items: center; width: 100%; background: {{ $offerWallTemplate->headerBg }}; padding: 15px 15px; justify-content: space-between;">
@@ -113,13 +112,13 @@
             <div style="display: flex ; align-items: center; justify-content: space-between; padding: 3px 5px; background:{{ $offerWallTemplate->headerMenuBg }}">
                <ul class="menuNav" style="display: flex; align-items: center; justify-content: start; gap: 10px; padding: 0; margin: 0; list-style: none;">
                   <li>
-                     <a  href="{{ route('offerwall', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
+                     <a  href="{{ route('offerwall-demo', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
                         style="display: block; padding: 14px 10px; font-size: 15px; color: {{ $offerWallTemplate->headerNonActiveTextColor }}; border-bottom: 1px solid transparent; text-decoration: none;font-family: Open Sans;">
                      Offers
                      </a>
                   </li>
                   <li>
-                     <a href="{{ route('completedOffers', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
+                     <a href="{{ route('completedOffers-demo', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
                         style="display: block; padding: 14px 10px; font-size: 15px; color: {{ $offerWallTemplate->headerNonActiveTextColor }}; border-bottom: 1px solid transparent; text-decoration: none;font-family: Open Sans;">
                      My Rewards
                      </a>
@@ -130,6 +129,7 @@
                <div class="dropdown headDropdown">
                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22H4ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13Z"></path></svg>
+                  <span class="countBxHead">10</span>
                    </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                   <li>
@@ -202,7 +202,7 @@
                                 </button>
                                 </div>
                                 <div class="mobileList">
-                                <button onclick="toggleDiv()" class=" md:hidden p-[0] w-[35px] h-[35px] flex items-center justify-center text-black rounded-[40px] bg-[#f2f2f2] focus:outline-none " > <svg xmlns="http://www.w3.org/2000/svg" class="w-[15px] h-[15px]" viewBox="0 0 24 24" fill="currentColor"><path d="M3 4H21V6H3V4ZM9 11H21V13H9V11ZM3 18H21V20H3V18Z"></path></svg> </button>
+                                <button onclick="toggleDiv()" class=" md:hidden p-[0] w-[35px] h-[35px] flex items-center justify-center text-black rounded-[40px] bg-[#f2f2f2] focus:outline-none " ><svg class="w-[18px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9999 13.1714L16.9497 8.22168L18.3639 9.63589L11.9999 15.9999L5.63599 9.63589L7.0502 8.22168L11.9999 13.1714Z"></path></svg> </button>
                                 </div>
                             </div>
 
@@ -213,16 +213,13 @@
                                     <div class="chatmsgBx ">
                                         <div class="chatmsg  ">
                                             <span class="chatTitle ">Ipsum
-                                                Lorem Lorem Lorem Lorem</span>
+                                                Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem</span>
                                                 <p class="chatDes">Hey, how’s it going going going going going going going going?</p>
                                             <span class="chatTime">14:56</span>
                                         </div>
                                     </div>
                                     <span class="chatCount">12</span>
-                                    <div class="chatmsgDrop hidden">
-                                        <button onclick="toggleDropdown(event)" class="">⋮</button>
                                     
-                                    </div>
                                 </li>
 
                                 <li class="group relative py-[10px] hover:bg-gray-100 border-b border-b-[#f2f2f2] flex items-center gap-[5px] md:gap-[8px] cursor-pointer"> <img src="/images/user.webp" class="" />
@@ -235,10 +232,7 @@
                                         </div>
                                     </div>
                                     <span class="chatCount">12</span>
-                                    <div class="chatmsgDrop hidden">
-                                        <button onclick="toggleDropdown(event)" class="">⋮</button>
-                                    
-                                    </div>
+                                   
                                 </li>
 
 
@@ -252,10 +246,7 @@
                                         </div>
                                     </div>
                                     <span class="chatCount">12</span>
-                                    <div class="chatmsgDrop hidden">
-                                        <button onclick="toggleDropdown(event)" class="">⋮</button>
-                                    
-                                    </div>
+                                  
                                 </li>
 
 
@@ -269,10 +260,7 @@
                                         </div>
                                     </div>
                                     <span class="chatCount">12</span>
-                                    <div class="chatmsgDrop hidden">
-                                        <button onclick="toggleDropdown(event)" class="">⋮</button>
                                     
-                                    </div>
                                 </li>
 
 
@@ -286,10 +274,7 @@
                                         </div>
                                     </div>
                                     <span class="chatCount">12</span>
-                                    <div class="chatmsgDrop hidden">
-                                        <button onclick="toggleDropdown(event)" class="">⋮</button>
-                                    
-                                    </div>
+                                 
                                 </li>
 
 
@@ -303,10 +288,7 @@
                                         </div>
                                     </div>
                                     <span class="chatCount">12</span>
-                                    <div class="chatmsgDrop hidden">
-                                        <button onclick="toggleDropdown(event)" class="">⋮</button>
-                                    
-                                    </div>
+                                  
                                 </li>
 
 
@@ -320,10 +302,7 @@
                                         </div>
                                     </div>
                                     <span class="chatCount">12</span>
-                                    <div class="chatmsgDrop hidden">
-                                        <button onclick="toggleDropdown(event)" class="">⋮</button>
                                     
-                                    </div>
                                 </li>
 
                                 <li class="group relative py-[10px] hover:bg-gray-100 border-b border-b-[#f2f2f2] flex items-center gap-[5px] md:gap-[8px] cursor-pointer"> <img src="/images/user.webp" class="" />
@@ -336,10 +315,7 @@
                                         </div>
                                     </div>
                                     <span class="chatCount">12</span>
-                                    <div class="chatmsgDrop hidden">
-                                        <button onclick="toggleDropdown(event)" class="">⋮</button>
-                                    
-                                    </div>
+                                   
                                 </li>
 
 
@@ -353,10 +329,7 @@
                                         </div>
                                     </div>
                                     <span class="chatCount">12</span>
-                                    <div class="chatmsgDrop hidden">
-                                        <button onclick="toggleDropdown(event)" class="">⋮</button>
-                                    
-                                    </div>
+                                   
                                 </li>
 
 
@@ -370,10 +343,7 @@
                                         </div>
                                     </div>
                                     <span class="chatCount">12</span>
-                                    <div class="chatmsgDrop hidden">
-                                        <button onclick="toggleDropdown(event)" class="">⋮</button>
-                                    
-                                    </div>
+                                   
                                 </li>
 
 
@@ -387,10 +357,7 @@
                                         </div>
                                     </div>
                                     <span class="chatCount">12</span>
-                                    <div class="chatmsgDrop hidden">
-                                        <button onclick="toggleDropdown(event)" class="">⋮</button>
-                                    
-                                    </div>
+                                   
                                 </li>
 
 
@@ -438,25 +405,25 @@
                             <div class="chatwindowUser flex items-center gap-[5px]">
                                 <img src="/images/user.webp" class="" />
                                 <div>
-                                    <p>Alice Whitman</p>
+                                    <p class="mb-[0]">Alice Whitman</p>
                                 </div>
                             </div>
 
                             <div class="chatwindowDrop relative flex items-center">
-                                <button  onclick="toggleDropdown3(event)"
+                                <!-- <button  onclick="toggleDropdown3(event)"
                                     class="p-[0] w-[35px] h-[35px] flex items-center justify-center text-black rounded-[40px] bg-[#f2f2f2] focus:outline-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-[15px] h-[15px]" viewBox="0 0 24 24" fill="currentColor"><path d="M3 4H21V6H3V4ZM9 11H21V13H9V11ZM3 18H21V20H3V18Z"></path></svg>
-                                </button>
+                                </button> -->
 
                                 <!-- Dropdown Menu (initially hidden) -->
-                                <div
+                                <!-- <div
                                     class="dropdownNav absolute right-0 top-[30px] mt-2 w-32 bg-white border rounded shadow-lg hidden z-[99]">
                                     <ul class="text-sm text-gray-700">
                                         <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Mute</li>
                                         <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Archive</li>
                                         <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-500">Delete</li>
                                     </ul>
-                                </div>
+                                </div> -->
                             </div>
 
                         </div>
@@ -593,11 +560,19 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-      
+<!-- Include Summernote JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.js"></script>
     <!--  -->
     
 <!-- chat js -->
 <script>
+    $(document).ready(function() {
+    $('#msgInput').summernote({
+      height: 50,
+      placeholder: 'Write your message here...',
+    toolbar: [],
+    });
+  });
     let activeButton = null;
     function toggleDropdown(e) {
       e.stopPropagation();
