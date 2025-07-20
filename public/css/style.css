@@ -137,8 +137,15 @@ footer{background:#0C0C0C;margin:50px 0 0;padding:70px 0 40px;}
 .logoLogin{padding:0 0 20px;text-align:center;}
 label.checkbox-group.agreebx{margin-bottom:20px;}
 .headDropdown .btn.btn-secondary{padding:0;color:#4ef953;width:40px;    border: none;}
+.headDropdown .btn.btn-secondary:hover,
+.headDropdown .btn.btn-secondary:focus,
+.headDropdown .btn.btn-secondary:active { outline: none; box-shadow: none;}
 .countBxHead { position: absolute; top: -8px; right: 12px; font-size: 13px; }
-
+.show-modal {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+ }
 .headDropdown .dropdown-menu li a{padding:8px 15px!important;text-align:left;}
 .headDropdown .dropdown-menu{background:#000;padding:0;border:none;border-radius:0;}
 .headDropdown .btn.btn-secondary svg{width:19px;}
