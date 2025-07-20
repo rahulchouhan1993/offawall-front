@@ -16,6 +16,8 @@ use App\Models\ConversionErrorTracker;
 use Jenssegers\Agent\Agent;
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+
 class DashboardController extends Controller
 {
 
@@ -773,10 +775,15 @@ class DashboardController extends Controller
                     ->from('trackings')
                     ->where('visitor_id', $_COOKIE['userCookie'])
                     ->groupBy('offer_id');
-            })->orderBy('id', 'DESC')->get();
+            })->with('ticket')->orderBy('id', 'DESC')->get();
             $allOffers = [
                 'offers' => []
             ];
+
+            $userLoggedIn = false;
+            if(!empty(Auth::user()->id)){
+                $userLoggedIn = true;
+            }
 
             if($allTrackings->isNotEmpty()){
                 foreach($allTrackings as $trKey => $tracking){
@@ -793,6 +800,7 @@ class DashboardController extends Controller
                             $allOffers['offers'][$tracking->id]['logo'] = $offerDetails['offer']['logo'];
                         }
                         $allOffers['offers'][$tracking->id]['description_lang'] = $offerDetails['offer']['description_lang']['en'];
+                        $allOffers['offers'][$tracking->id]['ticket_id'] = !empty($tracking->ticket) ? $tracking->ticket->id : NULL;
                     }
                 }
             }
@@ -815,7 +823,7 @@ class DashboardController extends Controller
         if(!isset($requestedParams['sub6'])){
             $requestedParams['sub6'] = NULL;
         }
-        return view('completedoffers',compact('allOffers','offerWallTemplate','appDetails','requestedParams','offerSettings'));
+        return view('completedoffers',compact('allOffers','offerWallTemplate','appDetails','requestedParams','offerSettings','userLoggedIn'));
         
     }
 

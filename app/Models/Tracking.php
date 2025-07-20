@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use PHPUnit\Framework\Attributes\Ticket;
 
 class Tracking extends Model
 {
@@ -43,4 +44,9 @@ class Tracking extends Model
         'status',
         'reason'
     ];
+
+
+    public function ticket(){
+        return $this->hasOne(Tickets::class,'tracking_id');
+    }
 }

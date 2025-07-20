@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ticketsController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,6 +30,10 @@ Route::match(['get','post'],'/logout',[AuthController::class,'logout'])->name('l
 Route::get('/email-verify',[AuthController::class,'emailVerify'])->name('email-verify');
 Route::post('/store-user',[AuthController::class,'register'])->name('store.user');
 Route::post('/login-user',[AuthController::class,'login'])->name('loginUser');
+
+
+Route::post('/createTicket', [ticketsController::class, 'store'])->name('createTicket');
+                       
 
 
 
