@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\ForgotPasswordMail;
 use App\Mail\UserRegisteredMail;
+use App\Models\Tracking;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -76,6 +77,12 @@ class AuthController extends Controller
             if(empty(Auth::user()->email_verified_at)){
                 Auth::logout();
                 return redirect()->back()->withErrors(['email' => 'Please first verify your email from your mail inbox.'])->withInput($request->all());;
+            }
+
+            $cookie = $_COOKIE['userCookie'];
+
+            if(!empty($cookie)){
+                Tracking::where('visitor_id',$cookie)->update(['visitor_user_id' => Auth::user()->id]);
             }
 
             return redirect()->route('offerwall', [

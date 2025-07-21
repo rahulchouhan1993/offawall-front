@@ -17,7 +17,7 @@
     <meta property="og:description" content="{{ $offerSettings->meta_description }}">
     <meta property="og:image" content="images/favicon.png">
     <meta property="og:url" content="{{ url()->current() }}">
-    
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ $offerSettings->meta_title }}">
@@ -25,6 +25,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <meta name="twitter:image" content="/images/favicon.png">
      <link rel="stylesheet" href="css/style.css?dfgdg">
     <style>
@@ -187,6 +189,14 @@
                         </div>
                         
                         </div>
+                        @if(empty($offer['ticket_id']))
+                        <div onclick="openPopup(this)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#555" viewBox="0 0 24 24">
+                                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02
+                                0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0L15.13 4.9l3.75 3.75 1.83-1.61z"/>
+                            </svg>
+                        </div>
+                        @endif
                     </div>
                 @endforeach
                 @endif
@@ -199,8 +209,77 @@
              </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <div id="descriptionModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:1000;">
+        <div style="background:#fff; padding:20px; border-radius:10px; width: 300px; max-width: 90%;">
+            <h3 style="margin-top: 0;">Enter Description</h3>
+            <textarea id="popupDescription" rows="4" style="width:100%; padding:8px; margin-bottom:10px;"></textarea>
+            <input type="hidden" id="offer_id" value="{{ $trackingDetails->id }}">
+            <div style="text-align: right;">
+                <button onclick="submitDescription()" style="padding: 6px 12px; background: #28a745; color: #fff; border: none; border-radius: 4px;">Submit</button>
+                <button onclick="closePopup()" style="padding: 6px 12px; background: #dc3545; color: #fff; border: none; border-radius: 4px;">Cancel</button>
+            </div>
+        </div>
+    </div>
+  
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
       
 </body>
+<script>
+    let currentBox = null;
+
+    function openPopup(triggerIcon) {
+        var userLoggedIn = "{{ $userLoggedIn }}";
+        var route = `{!! route('login', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) !!}`;
+
+        if (!userLoggedIn) {
+            location.href = route;
+        }
+        else{
+            
+            currentBox = triggerIcon.closest('.boxList');
+            document.getElementById('descriptionModal').style.display = 'flex';
+        }
+
+    }
+
+    function closePopup() {
+        $('#descriptionModal').hide();
+        $('#popupDescription').val('');
+    }
+
+    function submitDescription() {
+        const description = $('#popupDescription').val().trim();
+        const offerId = $('#offer_id').val();
+
+        if (description === '') {
+            toastr.warning('Please enter a description.');
+            return;
+        }
+
+        $.ajax({
+            url: '{{ route("createTicket") }}', // Define this route in web.php
+            type: 'POST',
+            data: {_token: '{{ csrf_token() }}',
+                    message: description,
+                    tracking_id: offerId
+                    },
+            success: function(response) {
+                
+                toastr.success(response.message || 'Description saved!');
+                closePopup();
+                setTimeout(function () {
+                    location.reload();
+                }, 1000);
+            },
+            error: function(xhr) {
+                let errorMessage = 'Something went wrong.';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMessage = xhr.responseJSON.message;
+                }
+                toastr.error(errorMessage);
+            }
+        });
+    }
+</script>
 </html>
