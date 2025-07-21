@@ -33,6 +33,9 @@ Route::post('/login-user',[AuthController::class,'login'])->name('loginUser');
 
 
 Route::post('/createTicket', [ticketsController::class, 'store'])->name('createTicket');
+
+Route::get('/ticketMessages/{ticketId}', [ticketsController::class, 'getChatConversation'])->name('getChatConversation');
+
                        
 
 

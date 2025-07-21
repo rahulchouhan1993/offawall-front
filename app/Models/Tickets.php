@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Tickets extends Model
 {
     protected $fillable = ['tracking_id', 'user_id', 'status'];
+
+    protected $appends = ['unread'];
 
     public function chats()
     {
@@ -17,6 +20,17 @@ class Tickets extends Model
     public function tracking()
     {
         return $this->belongsTo(Tracking::class);
+    }
+
+    public function lastchat()
+    {
+        return $this->hasOne(TicketsChats::class,'ticket_id')->latest();
+    }
+
+    public function getUnreadAttribute(){
+        $count = TicketsChats::where('ticket_id',$this->id)->where('is_read_user',0)->count();
+
+        return $count;
     }
 }
 
