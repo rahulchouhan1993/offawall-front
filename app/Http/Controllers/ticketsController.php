@@ -35,5 +35,24 @@ class ticketsController extends Controller
             'ticket_id' => $ticket->id
         ]);
     }
+
+    public function getChatConversation(Request $request, $ticketId)
+    {
+        $ticket = Tickets::with(['tracking:id,offer_name', 'lastchat'])
+            ->where('id', $ticketId)
+            ->first();
+
+        $messages = TicketsChats::where('ticket_id', $ticketId)
+            ->orderBy('created_at', 'ASC')
+            ->get();
+
+        TicketsChats::where('ticket_id', $ticketId)
+            ->update(['is_read_user' => 1]);
+
+        return response()->json([
+            'ticket' => $ticket,
+            'messages' => $messages
+        ]);
+    }
     
 }

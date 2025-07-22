@@ -13,6 +13,7 @@ use App\Models\Tracking;
 use App\Models\AppBlocker;
 use App\Models\TrafficTracking;
 use App\Models\ConversionErrorTracker;
+use App\Models\Tickets;
 use Jenssegers\Agent\Agent;
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
@@ -102,6 +103,9 @@ class DashboardController extends Controller
         
         $appDetails = App::where('appId',$request->wallId)->where('status',1)->first();
         $offerWallTemplate = Template::where('app_id',$appDetails->id)->first();
+
+        $tickets = Tickets::where('user_id',Auth::user()->id)->with(['tracking:id,offer_name','lastchat:id,message,media,ticket_id,created_at,updated_at'])->orderBy('updated_at','DESC')->get();
+        
         if(empty($offerWallTemplate)){
             $offerWallTemplate = Template::find(1);
         }
@@ -118,7 +122,7 @@ class DashboardController extends Controller
         if(!isset($requestedParams['sub6'])){
             $requestedParams['sub6'] = NULL;
         }
-        return view('tickets',compact('offerWallTemplate','appDetails','requestedParams','offerSettings'));
+        return view('tickets',compact('offerWallTemplate','appDetails','requestedParams','offerSettings','tickets'));
     }
 
     public function index(Request $request){

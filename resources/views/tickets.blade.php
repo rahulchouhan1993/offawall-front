@@ -139,26 +139,41 @@
                   <span class="countBxHead">10</span>
                    </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  @guest
                   <li>
-                     <a href="{{ route('login', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
-                        style="display: block; padding: 14px 10px; font-size: 15px; color: {{ $offerWallTemplate->headerNonActiveTextColor }}; border-bottom: 1px solid transparent; text-decoration: none;font-family: Open Sans;">
+                     <a class="active" href="{{ route('login', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
+                        style="display: block; padding: 14px 10px; font-size: 15px; border-bottom: 1px solid transparent; text-decoration: none;font-family: Open Sans; background: {{ $offerWallTemplate->headerActiveBg }}">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22H18C18 18.6863 15.3137 16 12 16C8.68629 16 6 18.6863 6 22H4ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11Z"></path></svg> Login
                      </a>
                   </li>
-
                   <li>
-                     <a class="active" href="{{ route('register', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
-                        style="display: block; padding: 14px 10px; font-size: 15px; border-bottom: 1px solid transparent; text-decoration: none;font-family: Open Sans; background: {{ $offerWallTemplate->headerActiveBg }}">
+                     <a href="{{ route('register', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
+                        style="display: block; padding: 14px 10px; font-size: 15px; color: {{ $offerWallTemplate->headerNonActiveTextColor }}; border-bottom: 1px solid transparent; text-decoration: none;font-family: Open Sans;">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10 11V8L15 12L10 16V13H1V11H10ZM2.4578 15H4.58152C5.76829 17.9318 8.64262 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C8.64262 4 5.76829 6.06817 4.58152 9H2.4578C3.73207 4.94289 7.52236 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C7.52236 22 3.73207 19.0571 2.4578 15Z"></path></svg> Register
                      </a>
-                  </li>    
+                  </li>
+                  @endguest    
 
+                   <li>
+                    <a href="{{ route('tickets', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
+                    onclick="handleTicketClick(event)"
+                    id="ticketLink"
+                    style="display: block; padding: 14px 10px; font-size: 15px; color: {{ $offerWallTemplate->headerNonActiveTextColor }}; border-bottom: 1px solid transparent; text-decoration: none;font-family: Open Sans;">
+                    
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="..."></path> <!-- Same icon path -->
+                    </svg> Tickets
+                    </a>
+                </li>
+
+                  @auth
                   <li>
-                     <a href="{{ route('tickets', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
+                     <a href="{{ route('logout', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
                         style="display: block; padding: 14px 10px; font-size: 15px; color: {{ $offerWallTemplate->headerNonActiveTextColor }}; border-bottom: 1px solid transparent; text-decoration: none;font-family: Open Sans;">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M2.00488 9.49979V3.99979C2.00488 3.4475 2.4526 2.99979 3.00488 2.99979H21.0049C21.5572 2.99979 22.0049 3.4475 22.0049 3.99979V9.49979C20.6242 9.49979 19.5049 10.6191 19.5049 11.9998C19.5049 13.3805 20.6242 14.4998 22.0049 14.4998V19.9998C22.0049 20.5521 21.5572 20.9998 21.0049 20.9998H3.00488C2.4526 20.9998 2.00488 20.5521 2.00488 19.9998V14.4998C3.38559 14.4998 4.50488 13.3805 4.50488 11.9998C4.50488 10.6191 3.38559 9.49979 2.00488 9.49979ZM4.00488 7.96755C5.4866 8.7039 6.50488 10.2329 6.50488 11.9998C6.50488 13.7666 5.4866 15.2957 4.00488 16.032V18.9998H20.0049V16.032C18.5232 15.2957 17.5049 13.7666 17.5049 11.9998C17.5049 10.2329 18.5232 8.7039 20.0049 7.96755V4.99979H4.00488V7.96755ZM9.00488 8.99979H15.0049V10.9998H9.00488V8.99979ZM9.00488 12.9998H15.0049V14.9998H9.00488V12.9998Z"></path></svg> Tickets
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M2.00488 9.49979V3.99979C2.00488 3.4475 2.4526 2.99979 3.00488 2.99979H21.0049C21.5572 2.99979 22.0049 3.4475 22.0049 3.99979V9.49979C20.6242 9.49979 19.5049 10.6191 19.5049 11.9998C19.5049 13.3805 20.6242 14.4998 22.0049 14.4998V19.9998C22.0049 20.5521 21.5572 20.9998 21.0049 20.9998H3.00488C2.4526 20.9998 2.00488 20.5521 2.00488 19.9998V14.4998C3.38559 14.4998 4.50488 13.3805 4.50488 11.9998C4.50488 10.6191 3.38559 9.49979 2.00488 9.49979ZM4.00488 7.96755C5.4866 8.7039 6.50488 10.2329 6.50488 11.9998C6.50488 13.7666 5.4866 15.2957 4.00488 16.032V18.9998H20.0049V16.032C18.5232 15.2957 17.5049 13.7666 17.5049 11.9998C17.5049 10.2329 18.5232 8.7039 20.0049 7.96755V4.99979H4.00488V7.96755ZM9.00488 8.99979H15.0049V10.9998H9.00488V8.99979ZM9.00488 12.9998H15.0049V14.9998H9.00488V12.9998Z"></path></svg> Logout
                      </a>
                   </li>
+                  @endauth
                </ul>
                </div>
             </div>
@@ -216,160 +231,38 @@
                         </div>
                         <div id="myDiv" class=" overflow-y-auto  max-h-[115px] md:max-h-[100vh] flex-grow">
                             <ul class="m-[0]">
-                                <li class="group relative py-[10px] hover:bg-gray-100 border-b border-b-[#f2f2f2] flex items-center gap-[5px] md:gap-[8px] cursor-pointer"> <img src="/images/user.webp" class="" />
+                            @if(!empty($tickets))
+                            @foreach($tickets as $ticket)
+                                    @php
+
+                                        $updatedAt = \Carbon\Carbon::parse($ticket['lastchat']['created_at'])->timezone('Asia/Kolkata');;
+
+                                        if ($updatedAt->isToday()) {
+                                            $formattedTime = 'Today ' . $updatedAt->format('H:i');
+                                        } elseif ($updatedAt->isYesterday()) {
+                                            $formattedTime = 'Yesterday ' . $updatedAt->format('H:i');
+                                        } else {
+                                            $formattedTime = $updatedAt->format('l H:i');
+                                        }
+                                    @endphp
+
+                                <li onclick="loadConversation({{ $ticket->id }})" class="group relative py-[10px] hover:bg-gray-100 border-b border-b-[#f2f2f2] flex items-center gap-[5px] md:gap-[8px] cursor-pointer"> <img src="/images/user.webp" class="" />
                                     <div class="chatmsgBx ">
                                         <div class="chatmsg  ">
-                                            <span class="chatTitle ">Ipsum
-                                                Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem</span>
-                                                <p class="chatDes">Hey, how’s it going going going going going going going going?</p>
-                                            <span class="chatTime">14:56</span>
+                                            <span class="chatTitle" title="{{ $ticket['tracking']['offer_name']}}">{{ Illuminate\Support\Str::limit($ticket['tracking']['offer_name'], 20) }}</span>
+                                                <p class="chatDes">{{ empty($ticket['lastchat']['media']) ? $ticket['lastchat']['message'] : $ticket['lastchat']['media'] }}</p>
+                                            <span class="chatTime">{{$formattedTime}}</span>
                                         </div>
                                     </div>
-                                    <span class="chatCount">12</span>
+                                    @if($ticket['unread'] != 0)
+                                    <span class="chatCount">{{$ticket['unread']}}</span>
+                                    @endif
+                                </li>
+                            @endforeach
+                            @else
                                     
-                                </li>
 
-                                <li class="group relative py-[10px] hover:bg-gray-100 border-b border-b-[#f2f2f2] flex items-center gap-[5px] md:gap-[8px] cursor-pointer"> <img src="/images/user.webp" class="" />
-                                    <div class="chatmsgBx ">
-                                        <div class="chatmsg  ">
-                                            <span class="chatTitle ">Ipsum
-                                                Lorem Lorem Lorem Lorem</span>
-                                                <p class="chatDes">Hey, how’s it going going going going going going going going?</p>
-                                            <span class="chatTime">14:56</span>
-                                        </div>
-                                    </div>
-                                    <span class="chatCount">12</span>
-                                   
-                                </li>
-
-
-                                <li class="group relative py-[10px] hover:bg-gray-100 border-b border-b-[#f2f2f2] flex items-center gap-[5px] md:gap-[8px] cursor-pointer"> <img src="/images/user.webp" class="" />
-                                    <div class="chatmsgBx ">
-                                        <div class="chatmsg  ">
-                                            <span class="chatTitle ">Ipsum
-                                                Lorem Lorem Lorem Lorem</span>
-                                                <p class="chatDes">Hey, how’s it going going going going going going going going?</p>
-                                            <span class="chatTime">14:56</span>
-                                        </div>
-                                    </div>
-                                    <span class="chatCount">12</span>
-                                  
-                                </li>
-
-
-                                <li class="group relative py-[10px] hover:bg-gray-100 border-b border-b-[#f2f2f2] flex items-center gap-[5px] md:gap-[8px] cursor-pointer"> <img src="/images/user.webp" class="" />
-                                    <div class="chatmsgBx ">
-                                        <div class="chatmsg  ">
-                                            <span class="chatTitle ">Ipsum
-                                                Lorem Lorem Lorem Lorem</span>
-                                                <p class="chatDes">Hey, how’s it going going going going going going going going?</p>
-                                            <span class="chatTime">14:56</span>
-                                        </div>
-                                    </div>
-                                    <span class="chatCount">12</span>
-                                    
-                                </li>
-
-
-                                <li class="group relative py-[10px] hover:bg-gray-100 border-b border-b-[#f2f2f2] flex items-center gap-[5px] md:gap-[8px] cursor-pointer"> <img src="/images/user.webp" class="" />
-                                    <div class="chatmsgBx ">
-                                        <div class="chatmsg  ">
-                                            <span class="chatTitle ">Ipsum
-                                                Lorem Lorem Lorem Lorem</span>
-                                                <p class="chatDes">Hey, how’s it going going going going going going going going?</p>
-                                            <span class="chatTime">14:56</span>
-                                        </div>
-                                    </div>
-                                    <span class="chatCount">12</span>
-                                 
-                                </li>
-
-
-                                <li class="group relative py-[10px] hover:bg-gray-100 border-b border-b-[#f2f2f2] flex items-center gap-[5px] md:gap-[8px] cursor-pointer"> <img src="/images/user.webp" class="" />
-                                    <div class="chatmsgBx ">
-                                        <div class="chatmsg  ">
-                                            <span class="chatTitle ">Ipsum
-                                                Lorem Lorem Lorem Lorem</span>
-                                                <p class="chatDes">Hey, how’s it going going going going going going going going?</p>
-                                            <span class="chatTime">14:56</span>
-                                        </div>
-                                    </div>
-                                    <span class="chatCount">12</span>
-                                  
-                                </li>
-
-
-                                <li class="group relative py-[10px] hover:bg-gray-100 border-b border-b-[#f2f2f2] flex items-center gap-[5px] md:gap-[8px] cursor-pointer"> <img src="/images/user.webp" class="" />
-                                    <div class="chatmsgBx ">
-                                        <div class="chatmsg  ">
-                                            <span class="chatTitle ">Ipsum
-                                                Lorem Lorem Lorem Lorem</span>
-                                                <p class="chatDes">Hey, how’s it going going going going going going going going?</p>
-                                            <span class="chatTime">14:56</span>
-                                        </div>
-                                    </div>
-                                    <span class="chatCount">12</span>
-                                    
-                                </li>
-
-                                <li class="group relative py-[10px] hover:bg-gray-100 border-b border-b-[#f2f2f2] flex items-center gap-[5px] md:gap-[8px] cursor-pointer"> <img src="/images/user.webp" class="" />
-                                    <div class="chatmsgBx ">
-                                        <div class="chatmsg  ">
-                                            <span class="chatTitle ">Ipsum
-                                                Lorem Lorem Lorem Lorem</span>
-                                                <p class="chatDes">Hey, how’s it going going going going going going going going?</p>
-                                            <span class="chatTime">14:56</span>
-                                        </div>
-                                    </div>
-                                    <span class="chatCount">12</span>
-                                   
-                                </li>
-
-
-                                <li class="group relative py-[10px] hover:bg-gray-100 border-b border-b-[#f2f2f2] flex items-center gap-[5px] md:gap-[8px] cursor-pointer"> <img src="/images/user.webp" class="" />
-                                    <div class="chatmsgBx ">
-                                        <div class="chatmsg  ">
-                                            <span class="chatTitle ">Ipsum
-                                                Lorem Lorem Lorem Lorem</span>
-                                                <p class="chatDes">Hey, how’s it going going going going going going going going?</p>
-                                            <span class="chatTime">14:56</span>
-                                        </div>
-                                    </div>
-                                    <span class="chatCount">12</span>
-                                   
-                                </li>
-
-
-                                <li class="group relative py-[10px] hover:bg-gray-100 border-b border-b-[#f2f2f2] flex items-center gap-[5px] md:gap-[8px] cursor-pointer"> <img src="/images/user.webp" class="" />
-                                    <div class="chatmsgBx ">
-                                        <div class="chatmsg  ">
-                                            <span class="chatTitle ">Ipsum
-                                                Lorem Lorem Lorem Lorem</span>
-                                                <p class="chatDes">Hey, how’s it going going going going going going going going?</p>
-                                            <span class="chatTime">14:56</span>
-                                        </div>
-                                    </div>
-                                    <span class="chatCount">12</span>
-                                   
-                                </li>
-
-
-                                <li class="group relative py-[10px] hover:bg-gray-100 border-b border-b-[#f2f2f2] flex items-center gap-[5px] md:gap-[8px] cursor-pointer"> <img src="/images/user.webp" class="" />
-                                    <div class="chatmsgBx ">
-                                        <div class="chatmsg  ">
-                                            <span class="chatTitle ">Ipsum
-                                                Lorem Lorem Lorem Lorem</span>
-                                                <p class="chatDes">Hey, how’s it going going going going going going going going?</p>
-                                            <span class="chatTime">14:56</span>
-                                        </div>
-                                    </div>
-                                    <span class="chatCount">12</span>
-                                   
-                                </li>
-
-
-
-                                
+                            @endif
                             </ul>
                         </div>
                     </aside>
@@ -412,7 +305,7 @@
                             <div class="chatwindowUser flex items-center gap-[5px]">
                                 <img src="/images/user.webp" class="" />
                                 <div>
-                                    <p class="mb-[0]">Alice Whitman</p>
+                                    <p class="mb-[0]"></p>
                                 </div>
                             </div>
 
@@ -439,12 +332,6 @@
                         <div id="chatMessages"
                             class="relative h-[35vh] md:h-[70vh] overflow-y-auto pt-[40px] px-[10px] py-[10px] md:px-[20px] md:py-[20px] xl:px-[30px] xl:py-[30px] space-y-4 z-[1]">
 
-                            <div
-                                class="groupAdded  absolute top-[8px] w-auto left-[0] right-[0] m-auto text-[13px] font-[600] text-[#49fb53]  text-center z-[9]">
-                                <div class="w-auto inline-flex shadow-md bg-white px-[10px] py-[5px]  rounded-[4px]">
-                                Mukesh Added At This Group
-                                </div>
-                                </div>
                             <div class="text-left">
                                 <div
                                     class="chatwindowMsg relative inline-flex flex-col bg-gray-100 p-[12px] lg:text-[15px]  text-sm  shadow-md rounded-[10px] rounded-tl-[0]">
@@ -452,31 +339,10 @@
                                     </div>
 
                                     <p class="text-[12px] xl:text-[13px]">
-                                        Here are all the files. Let me know once you’ve had a look. Here are all the files. Let me know
-                                        once you’ve had a look. Here are all the files. Let me know once you’ve had a look. Here are all
-                                        the files. Let me know once you’ve had a look. Here are all the files. Let me know once you’ve
-                                        had a look.
                                     </p>
 
                                     <div class="chatWindowDate ">
-                                        11/July/2025 <div class="chatWindowTime text-[12px] text-black font-[600]">10:40 PM</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="text-left">
-                                <div
-                                    class="chatwindowMsg relative inline-block bg-gray-100 p-[12px] lg:text-[15px]  text-sm  shadow-md rounded-[10px] rounded-tl-[0]">
-                                    <div
-                                        class="absolute  top-2 left-[-15px] w-0 h-0 border-t-[15px] border-t-transparent border-b-[15px] border-b-transparent border-r-[15px] border-r-gray-100">
-                                    </div>
-                                    <p class="text-[12px] xl:text-[13px]">
-                                        Here are all the files. Let me know once you’ve had a look. once you’ve had a look. once you’ve
-                                        had a look.
-                                    </p>
-
-                                    <div class="chatWindowDate">
-                                        11/July/2025 <div class="text-[12px] text-black font-[600]">10:40 PM</div>
+                                         <div class="chatWindowTime text-[12px] text-black font-[600]"></div>
                                     </div>
                                 </div>
                             </div>
@@ -491,30 +357,14 @@
                                         class="absolute top-2 right-[-15px] w-0 h-0 border-t-[15px] border-t-transparent border-b-[15px] border-b-transparent border-l-[15px] border-l-green-100">
                                     </div>
                                     <p class="text-[12px] xl:text-[13px]">
-                                        Here are all the files. Let me know once you’ve had a look. Here are all the files.
+                                        
                                     </p>
 
                                     <div class="chatWindowDate">
-                                        11/July/2025 <div class="text-[12px] text-black font-[600]">10:40 PM</div>
+                                         <div class="text-[12px] text-black font-[600]"></div>
                                     </div>
                                 </div>
                             </div>
-
-
-                            <div class="text-right">
-                                <div
-                                    class="chatwindowMsg relative inline-block bg-green-100 text-green-800 text-sm p-[18px] rounded-[10px] rounded-tl-[0] shadow-md">
-                                    <div
-                                        class="  absolute top-2 right-[-15px] w-0 h-0 border-t-[15px] border-t-transparent border-b-[15px] border-b-transparent border-l-[15px] border-l-green-100">
-                                    </div>
-                                    <p class="text-[12px] xl:text-[13px]">Here are all the files.</p>
-
-                                    <div class="chatWindowDate">
-                                        11/July/2025 <div class="text-[12px] text-black font-[600]">10:40 PM</div>
-                                    </div>
-                                </div>
-                            </div>
-
 
 
                         </div>
@@ -659,6 +509,93 @@
       div.classList.toggle("hidden");
     }
   </script>
+
+  <script>
+      function handleTicketClick(event) {
+         event.preventDefault(); // stop default link navigation
+
+         var userLoggedIn = "{{ auth()->check() ? 'true' : '' }}";
+
+         var loginRoute = `{!! route('login', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) !!}`;
+         var ticketRoute = document.getElementById('ticketLink').href;
+
+         if (!userLoggedIn || userLoggedIn === "false") {
+               window.location.href = loginRoute;
+         } else {
+               window.location.href = ticketRoute;
+         }
+      }
+   </script>
+
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var tickets = "{{ $tickets }}"
+
+        if(tickets.length > 0){
+            var ticketId = "{{ $tickets[0]['id'] }}"
+        }
+        loadConversation(ticketId);
+    });
+
+    function loadConversation(ticketId) {
+        fetch(`/ticketMessages/${ticketId}`)
+            .then(response => response.json())
+            .then(data => {
+                const chatWindow = document.getElementById('chatMessages');
+                const headerUser = document.querySelector('.chatwindowUser p');
+                const logo = document.querySelector('.chatwindowLogo img');
+
+                // Update chat header
+                headerUser.textContent = data.ticket.tracking.offer_name;
+
+                // Clear chat area
+                chatWindow.innerHTML = '';
+
+                // Add each message
+                data.messages.forEach(msg => {
+                    const msgWrapper = document.createElement('div');
+                    msgWrapper.classList.add(msg.from == "user" ? 'text-right' : 'text-left');
+
+                    const bubble = document.createElement('div');
+                    bubble.className = msg.from == "user"
+                        ? 'chatwindowMsg relative inline-block bg-green-100 text-green-800 text-sm p-[12px] lg:text-[15px] rounded-[10px] rounded-tl-[0] shadow-md'
+                        : 'chatwindowMsg relative inline-flex flex-col bg-gray-100 p-[12px] lg:text-[15px] text-sm shadow-md rounded-[10px] rounded-tl-[0]';
+
+                    // Arrow div
+                    const arrow = document.createElement('div');
+                    arrow.className = msg.from == "user"
+                        ? 'absolute top-2 right-[-15px] w-0 h-0 border-t-[15px] border-t-transparent border-b-[15px] border-b-transparent border-l-[15px] border-l-green-100'
+                        : 'absolute top-2 left-[-15px] w-0 h-0 border-t-[15px] border-t-transparent border-b-[15px] border-b-transparent border-r-[15px] border-r-gray-100';
+                    bubble.appendChild(arrow);
+
+                    // Message text
+                    const msgText = document.createElement('p');
+                    msgText.className = 'text-[12px] xl:text-[13px]';
+                    msgText.textContent = msg.message || msg.media;
+                    bubble.appendChild(msgText);
+
+                    const timestamp = document.createElement('div');
+                    timestamp.className = 'chatWindowDate';
+
+                    const time = new Date(msg.created_at);
+
+                    const day = time.getDate();
+                    const month = time.toLocaleString('default', { month: 'long' });
+                    const year = time.getFullYear();
+                    const formattedDate = `${day}/${month}/${year}`;
+                    const formattedTime = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                    timestamp.innerHTML = `${formattedDate} <div class="text-[12px] text-black font-[600]">${formattedTime}</div>`;
+                    bubble.appendChild(timestamp);
+
+                    msgWrapper.appendChild(bubble);
+                    chatWindow.appendChild(msgWrapper);
+                });
+            });
+    }
+</script>
 
 
    </body>
