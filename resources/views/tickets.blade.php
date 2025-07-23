@@ -236,11 +236,11 @@
                                         $updatedAt = \Carbon\Carbon::parse($ticket['lastchat']['created_at'])->timezone('Asia/Kolkata');;
 
                                         if ($updatedAt->isToday()) {
-                                            $formattedTime = 'Today ' . $updatedAt->format('H:i');
+                                            $formattedTime = 'Today ' . $updatedAt->format('h:i A');
                                         } elseif ($updatedAt->isYesterday()) {
-                                            $formattedTime = 'Yesterday ' . $updatedAt->format('H:i');
+                                            $formattedTime = 'Yesterday ' . $updatedAt->format('h:i A');
                                         } else {
-                                            $formattedTime = $updatedAt->format('l H:i');
+                                            $formattedTime = $updatedAt->format('l h:i A');
                                         }
                                     @endphp
 
@@ -602,10 +602,10 @@
                     const time = new Date(msg.created_at);
 
                     const day = time.getDate();
-                    const month = time.toLocaleString('default', { month: 'long' });
+                    const month = time.toLocaleString('default', { month: 'short' });
                     const year = time.getFullYear();
-                    const formattedDate = `${day}/${month}/${year}`;
-                    const formattedTime = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                    const formattedDate = `${day} ${month} ${year}`;
+                    const formattedTime = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
 
                     timestamp.innerHTML = `${formattedDate} <div class="text-[12px] text-black font-[600]">${formattedTime}</div>`;
                     bubble.appendChild(timestamp);

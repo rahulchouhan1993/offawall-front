@@ -151,6 +151,16 @@
                         $totalPayoutGiven = $trackingDetails->reward;
                     @endphp
                     <div class="boxList" style="display: flex; align-items: center; flex-wrap:wrap; gap: 20px; padding: 20px;     box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2); border-radius:15px; background: {{ $offerWallTemplate->offerBg }}; border: 1px solid {{ $offerWallTemplate->offerBg }}; width: 100%;">
+
+                    {{-- Top-right ticket icon --}}
+                    @if(!empty($offer['ticket_id']))
+                    <div style="position: relative; top: 0px; right: 0px;" title="Ticket created for this reward.">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#4CAF50" viewBox="0 0 24 24">
+                            <path d="M12 0C5.37109 0 0 5.37109 0 12C0 18.6289 5.37109 24 12 24C18.6289 24 24 18.6289 24 12C24 5.37109 18.6289 0 12 0ZM10.2422 17.3203L4.92188 12L6.33594 10.5859L10.2422 14.4922L17.6641 7.07031L19.0781 8.48438L10.2422 17.3203Z" />
+                        </svg>
+                    </div>
+                    @endif
+
                         <div style="width: 100%; display: flex ; align-items: center; gap:10px;">
 
                         <div style="width: 107px;">
@@ -219,7 +229,7 @@
                             <label for="offer_name_id_{{$trackingDetails->id}}" style="margin-right:20px;margin-bottom:20px">Offer Name</label>
                             <input type="text" id="offer_name_id_{{$trackingDetails->id}}" value="{{ $trackingDetails->offer_name }}" size="50" disabled> <br>
                             <label for="offer_name_id_{{$trackingDetails->id}}" style="margin-right:20px;margin-bottom:20px">Description</label>
-                            <textarea id="popupDescription_{{$trackingDetails->id}}" rows="4" style="width:100%; padding:8px; margin-bottom:10px;"></textarea> <br>
+                            <textarea id="popupDescription_{{$trackingDetails->id}}" class="w-full flex-1 py-[15px] px-[30px] border-none bg-[#f2f2f2] rounded-[80px] text-[11px] md:text-[15px] text-black focus:outline-none"></textarea> <br>
                             <input type="hidden" id="offer_id_{{$trackingDetails->id}}" value="{{ $trackingDetails->id }}">
                             <div style="text-align: right;">
                                 <button onclick="submitDescription({{$trackingDetails->id}})" style="padding: 6px 12px; background: #28a745; color: #fff; border: none; border-radius: 4px;">Submit</button>
@@ -242,15 +252,16 @@
     
   
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-      
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.css" rel="stylesheet">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.js"></script>
 </body>
 <script>
     let currentBox = null;
 
     function openPopup(triggerIcon,id) {
-        $('#msgInput').summernote({
+        $('#popupDescription_'+id).summernote({
             height: 50,
-            placeholder: 'Write your message here...',
+            placeholder: 'Write your query here...',
             toolbar: [],
         });
 
@@ -308,7 +319,7 @@
                 toastr.success(response.message || 'Description saved!');
                 closePopup(id);
                 setTimeout(function () {
-                    location.reload();
+                    window.location.href = `{!! route("tickets", ["apiKey" => $requestedParams["apiKey"], "wallId" => $requestedParams["wallId"], "userId" => $requestedParams["userId"], "sub4" => $requestedParams["sub4"], "sub5" => $requestedParams["sub5"], "sub6" => $requestedParams["sub6"]]) !!}`;
                 }, 1000);
             },
             error: function(xhr) {

@@ -220,9 +220,6 @@
                      <i class="fas fa-lock"></i>
                      <input type="password" name="password_confirmation" value="{{ old('password_confirmation')}}" placeholder="Confirm Password" required>
                   </div>
-                     <label class="checkbox-group agreebx">
-                        <input type="checkbox" name="terms"> I agree to the Terms &amp; Conditions
-                     </label>
                   <button type="submit" class="login-btn">SIGN UP</button>
                </div>
                </form>
