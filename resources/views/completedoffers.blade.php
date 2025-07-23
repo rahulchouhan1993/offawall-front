@@ -248,6 +248,12 @@
     let currentBox = null;
 
     function openPopup(triggerIcon,id) {
+        $('#msgInput').summernote({
+            height: 50,
+            placeholder: 'Write your message here...',
+            toolbar: [],
+        });
+
         var userLoggedIn = "{{ $userLoggedIn }}";
         var route = `{!! route('login', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) !!}`;
 
