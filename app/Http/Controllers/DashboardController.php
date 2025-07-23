@@ -103,8 +103,6 @@ class DashboardController extends Controller
         
         $appDetails = App::where('appId',$request->wallId)->where('status',1)->first();
         $offerWallTemplate = Template::where('app_id',$appDetails->id)->first();
-
-        $tickets = Tickets::where('user_id',Auth::user()->id)->with(['tracking:id,offer_name','lastchat:id,message,media,ticket_id,created_at,updated_at'])->orderBy('updated_at','DESC')->get();
         
         if(empty($offerWallTemplate)){
             $offerWallTemplate = Template::find(1);
@@ -122,6 +120,14 @@ class DashboardController extends Controller
         if(!isset($requestedParams['sub6'])){
             $requestedParams['sub6'] = NULL;
         }
+
+        if(Auth::check()){
+            $tickets = Tickets::where('user_id',Auth::user()->id)->with(['tracking:id,offer_name','lastchat:id,message,media,ticket_id,created_at,updated_at'])->orderBy('updated_at','DESC')->get();
+        }
+        else{
+            return view('login',compact('offerWallTemplate','appDetails','requestedParams','offerSettings'));
+        }
+
         return view('tickets',compact('offerWallTemplate','appDetails','requestedParams','offerSettings','tickets'));
     }
 
@@ -804,6 +810,7 @@ class DashboardController extends Controller
                             $allOffers['offers'][$tracking->id]['logo'] = $offerDetails['offer']['logo'];
                         }
                         $allOffers['offers'][$tracking->id]['description_lang'] = $offerDetails['offer']['description_lang']['en'];
+                        $allOffers['offers'][$tracking->id]['ticket_id'] = !empty($tracking->ticket) ? $tracking->ticket->id : NULL;
                         $allOffers['offers'][$tracking->id]['ticket_id'] = !empty($tracking->ticket) ? $tracking->ticket->id : NULL;
                     }
                 }

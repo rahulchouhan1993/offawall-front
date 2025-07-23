@@ -67,7 +67,7 @@ class AuthController extends Controller
 
         $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::guard('web')->attempt($credentials)) {
            
             if (Auth::user()->role !== 'user') {
                 Auth::logout();

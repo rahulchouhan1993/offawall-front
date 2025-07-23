@@ -102,7 +102,7 @@
 
         <!-- Include Summernote CSS -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.css" rel="stylesheet">
-
+         
    </head>
    @php
       use App\Models\Tracking;
@@ -250,7 +250,7 @@
                                     <div class="chatmsgBx ">
                                         <div class="chatmsg  ">
                                             <span class="chatTitle" title="{{ $ticket['tracking']['offer_name']}}">{{ Illuminate\Support\Str::limit($ticket['tracking']['offer_name'], 20) }}</span>
-                                                <p class="chatDes">{{ empty($ticket['lastchat']['media']) ? $ticket['lastchat']['message'] : $ticket['lastchat']['media'] }}</p>
+                                                <p class="chatDes">{!! $ticket['lastchat']['message'] !!}</p>
                                             <span class="chatTime">{{$formattedTime}}</span>
                                         </div>
                                     </div>
@@ -370,8 +370,10 @@
                         </div>
 
                         <!-- Input Box (Fixed on Mobile) -->
-                        <div
+                        <div id="chatInputBar" 
                             class="chatwindowAreaBx flex gap-[6px] md:gap-[10px] p-[10px] md:p-[13px] border-t  mobile-fixed md:relative z-[999] w-full">
+                            <form onsubmit="event.preventDefault(); addMessage();" enctype="multipart/form-data" class="w-full flex items-center gap-2">
+
                             <div class="chatwindowAttachement relative flex items-center">
                                 <label for="fileInput" class="cursor-pointer flex items-center gap-1 text-black hover:text-[#49FB53]">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -384,7 +386,6 @@
                                 <input id="fileInput" type="file" class="hidden" />
                             </div>
 
-                            <form onsubmit="event.preventDefault(); addMessage();" class="w-full flex items-center gap-2">
                                 <textarea id="msgInput" placeholder="Type a message..."
                                     class="w-full flex-1 py-[15px] px-[30px] border-none bg-[#f2f2f2] rounded-[80px] text-[11px] md:text-[15px] text-black focus:outline-none"></textarea>
                                 <button type="submit"
@@ -396,6 +397,11 @@
                                         </path>
                                     </svg></button>
                             </form>
+                        </div>
+
+                        <!-- Ticket Closed Message -->
+                        <div id="chatClosedMessage" class="chatwindowAreaBx hidden text-center text-sm text-gray-600 p-4 w-full border-t bg-gray-100 z-[999]">
+                            This ticket has been closed by the admin. You cannot send further messages.
                         </div>
                     </main>
 
@@ -419,6 +425,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Include Summernote JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.js"></script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <!--  -->
     
 <!-- chat js -->
@@ -531,24 +540,37 @@
 <script>
 
     document.addEventListener("DOMContentLoaded", function () {
-        var tickets = "{{ $tickets }}"
+        var tickets = @json($tickets); // Correct way to pass PHP array to JS
 
-        if(tickets.length > 0){
-            var ticketId = "{{ $tickets[0]['id'] }}"
+        if (tickets.length > 0) {
+            var ticketId = tickets[0].id;
+            loadConversation(ticketId);
         }
-        loadConversation(ticketId);
     });
 
     function loadConversation(ticketId) {
+        window.currentTicketId = ticketId;
+
         fetch(`/ticketMessages/${ticketId}`)
             .then(response => response.json())
             .then(data => {
                 const chatWindow = document.getElementById('chatMessages');
                 const headerUser = document.querySelector('.chatwindowUser p');
                 const logo = document.querySelector('.chatwindowLogo img');
+                const inputBar = document.getElementById('chatInputBar');
+                const closedMessage = document.getElementById('chatClosedMessage');
+
 
                 // Update chat header
                 headerUser.textContent = data.ticket.tracking.offer_name;
+
+                if (data.ticket.status == 2) {
+                    inputBar.style.display = 'none';
+                    closedMessage.style.display = 'block';
+                } else {
+                    inputBar.style.display = 'flex';
+                    closedMessage.style.display = 'none';
+                }
 
                 // Clear chat area
                 chatWindow.innerHTML = '';
@@ -573,7 +595,7 @@
                     // Message text
                     const msgText = document.createElement('p');
                     msgText.className = 'text-[12px] xl:text-[13px]';
-                    msgText.textContent = msg.message || msg.media;
+                    msgText.innerHTML = msg.message || msg.media;
                     bubble.appendChild(msgText);
 
                     const timestamp = document.createElement('div');
@@ -593,7 +615,64 @@
                     msgWrapper.appendChild(bubble);
                     chatWindow.appendChild(msgWrapper);
                 });
+                chatWindow.scrollTop = chatWindow.scrollHeight;
             });
+    }
+
+
+    function addMessage() {
+        const message = document.getElementById('msgInput').value.trim();
+        const ticketId = window.currentTicketId;
+        const fileInput = document.getElementById('fileInput');
+        const file = fileInput.files[0];
+
+        // Send text message (if exists)
+        if (message) {
+            $.ajax({
+                url: '{{ route("sendMessage") }}',
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    message: message,
+                    ticket_id: ticketId
+                },
+                success: function (response) {
+                    $('#msgInput').summernote('reset');
+                    toastr.success(response.message || 'Message Sent');
+                    document.getElementById('msgInput').value = ''; 
+                    loadConversation(ticketId);
+                },
+                error: function (xhr) {
+                    alert('Message failed to send');
+                    console.log(xhr.responseText);
+                }
+            });
+        }
+
+        // Send file message (if file exists)
+        if (file) {
+            const formData = new FormData();
+            formData.append('_token', '{{ csrf_token() }}');
+            formData.append('ticket_id', ticketId);
+            formData.append('media', file);
+
+            $.ajax({
+                url: '{{ route("sendMessage") }}',
+                method: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    fileInput.value = '';
+                    toastr.success('File Sent');
+                    loadConversation(ticketId);
+                },
+                error: function (xhr) {
+                    alert('File failed to send');
+                    console.log(xhr.responseText);
+                }
+            });
+        }
     }
 </script>
 

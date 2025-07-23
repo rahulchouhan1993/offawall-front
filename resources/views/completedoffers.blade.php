@@ -204,7 +204,7 @@
                         </div>
                         
                         </div>
-                        @if(empty($offer['ticket_id']))
+                        @if(empty($offer['ticket_id']) && Auth::user()->id)
                         <div onclick="openPopup(this,{{$trackingDetails->id}})">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#555" viewBox="0 0 24 24">
                                 <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02
@@ -216,9 +216,12 @@
 
 
                     <div id="descriptionModal_{{$trackingDetails->id}}" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:1000;">
-                        <div style="background:#fff; padding:20px; border-radius:10px; width: 300px; max-width: 90%;">
-                            <h3 style="margin-top: 0;">Enter Description</h3>
-                            <textarea id="popupDescription_{{$trackingDetails->id}}" rows="4" style="width:100%; padding:8px; margin-bottom:10px;"></textarea>
+                        <div style="background:#fff; padding:20px; border-radius:10px; width: 800px; max-width: 90%;">
+                            <h3 style="margin-bottom: 20px;">Describe your case, so that it helps us to investigate this further.</h3>
+                            <label for="offer_name_id_{{$trackingDetails->id}}" style="margin-right:20px;margin-bottom:20px">Offer Name</label>
+                            <input type="text" id="offer_name_id_{{$trackingDetails->id}}" value="{{ $trackingDetails->offer_name }}" size="50" disabled> <br>
+                            <label for="offer_name_id_{{$trackingDetails->id}}" style="margin-right:20px;margin-bottom:20px">Description</label>
+                            <textarea id="popupDescription_{{$trackingDetails->id}}" rows="4" style="width:100%; padding:8px; margin-bottom:10px;"></textarea> <br>
                             <input type="hidden" id="offer_id_{{$trackingDetails->id}}" value="{{ $trackingDetails->id }}">
                             <div style="text-align: right;">
                                 <button onclick="submitDescription({{$trackingDetails->id}})" style="padding: 6px 12px; background: #28a745; color: #fff; border: none; border-radius: 4px;">Submit</button>
