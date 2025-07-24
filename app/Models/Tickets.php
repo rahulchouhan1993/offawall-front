@@ -28,7 +28,7 @@ class Tickets extends Model
     }
 
     public function getUnreadAttribute(){
-        $count = TicketsChats::where('ticket_id',$this->id)->where('is_read_user',0)->count();
+        $count = TicketsChats::where('ticket_id',$this->id)->where('is_read_user',0)->where('from','admin')->count();
 
         return $count;
     }

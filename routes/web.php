@@ -20,7 +20,6 @@ Route::get('/blocked',[DashboardController::class,'blocked'])->name('blocked');
 Route::match(['get','post'],'/login',[DashboardController::class,'login'])->name('login');
 Route::match(['get','post'],'/register',[DashboardController::class,'register'])->name('register');
 Route::match(['get','post'],'/forgot-password',[DashboardController::class,'forgotPassword'])->name('forgotPassword');
-Route::get('/tickets',[DashboardController::class,'tickets'])->name('tickets');
 
 Route::post('/send-forgot-password-mail',[AuthController::class,'sendForgotPasswordMail'])->name('sendForgotPasswordMail');
 
@@ -32,9 +31,17 @@ Route::post('/store-user',[AuthController::class,'register'])->name('store.user'
 Route::post('/login-user',[AuthController::class,'login'])->name('loginUser');
 
 
-Route::post('/createTicket', [ticketsController::class, 'store'])->name('createTicket');
+// Route::middleware('auth')->group(function () {
 
-Route::get('/ticketMessages/{ticketId}', [ticketsController::class, 'getChatConversation'])->name('getChatConversation');
+    Route::get('/tickets',[DashboardController::class,'tickets'])->name('tickets');
+    Route::post('/createTicket', [ticketsController::class, 'store'])->name('createTicket');
+    
+    Route::get('/ticketMessages/{ticketId}', [ticketsController::class, 'getChatConversation'])->name('getChatConversation');
+
+    Route::post('/sendMessage', [ticketsController::class, 'sendMessage'])->name('sendMessage');
+
+
+// });
 
                        
 
