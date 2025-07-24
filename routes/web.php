@@ -40,6 +40,11 @@ Route::post('/login-user',[AuthController::class,'login'])->name('loginUser');
 
     Route::post('/sendMessage', [ticketsController::class, 'sendMessage'])->name('sendMessage');
 
+    Route::get('/refresh-tickets', [TicketsController::class, 'refreshTickets']);
+
+    Route::post('/upload-attachment', [TicketsController::class, 'uploadAttachment']);
+
+
 
 // });
 
