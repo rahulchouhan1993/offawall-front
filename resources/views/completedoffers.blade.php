@@ -212,7 +212,7 @@
                         </div>
                         
                         </div>
-                        @if(empty($offer['ticket_id']) && Auth::user()->id)
+                        @if(empty($offer['ticket_id']))
                         <div onclick="openPopup(this,{{$trackingDetails->id}})">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#555" viewBox="0 0 24 24">
                                 <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02

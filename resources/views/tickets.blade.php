@@ -211,7 +211,7 @@
                             </div>
                             <div class="chatSearch">
                                 <div class="relative w-[100%]">
-                                <input type="text" placeholder="Search or start new chat"
+                                <input type="text" placeholder="Search..."
                                     class="w-full pl-[40px] pr-[15px] py-[9px] border rounded-[60px] text-sm bg-[#f5f5f5] focus:outline-none" />
                                 <button class="searchbtn">
                                     <svg class="w-[20px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -248,7 +248,7 @@
                                     <div class="chatmsgBx ">
                                         <div class="chatmsg  ">
                                             <span class="chatTitle" title="{{ $ticket['tracking']['offer_name']}}">{{ Illuminate\Support\Str::limit($ticket['tracking']['offer_name'], 20) }}</span>
-                                                <p class="chatDes">{!! $ticket['lastchat']['message'] !!}</p>
+                                                <p class="chatDes">{!! strip_tags($ticket['lastchat']['message']) !!}</p>
                                             <span class="chatTime">{{$formattedTime}}</span>
                                         </div>
                                     </div>
