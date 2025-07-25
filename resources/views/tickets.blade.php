@@ -136,7 +136,17 @@
                <div class="dropdown headDropdown">
                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22H4ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13Z"></path></svg>
-                  <span class="countBxHead">10</span>
+                  <span class="countBxHead">
+                    @if(count($tickets) > 0)
+                        @if($tickets[0]['total_unread'] != 0)
+                           {{$tickets[0]['total_unread']}}
+                        @else
+                            {{''}}
+                        @endif
+                    @else
+                        {{''}}
+                    @endif
+                    </span>
                    </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                   @guest
@@ -228,40 +238,7 @@
 
                         </div>
                         <div id="myDiv" class=" overflow-y-auto  max-h-[115px] md:max-h-[100vh] flex-grow">
-                            <ul class="m-[0]">
-                            @if(!empty($tickets))
-                            @foreach($tickets as $ticket)
-                                    @php
-
-                                        $updatedAt = \Carbon\Carbon::parse($ticket['lastchat']['created_at'])->timezone('Asia/Kolkata');;
-
-                                        if ($updatedAt->isToday()) {
-                                            $formattedTime = 'Today ' . $updatedAt->format('h:i A');
-                                        } elseif ($updatedAt->isYesterday()) {
-                                            $formattedTime = 'Yesterday ' . $updatedAt->format('h:i A');
-                                        } else {
-                                            $formattedTime = $updatedAt->format('l h:i A');
-                                        }
-                                    @endphp
-
-                                <li onclick="loadConversation({{ $ticket->id }})" class="group relative py-[10px] hover:bg-gray-100 border-b border-b-[#f2f2f2] flex items-center gap-[5px] md:gap-[8px] cursor-pointer"> <img src="/images/user.webp" class="" />
-                                    <div class="chatmsgBx ">
-                                        <div class="chatmsg  ">
-                                            <span class="chatTitle" title="{{ $ticket['tracking']['offer_name']}}">{{ Illuminate\Support\Str::limit($ticket['tracking']['offer_name'], 20) }}</span>
-                                                <p class="chatDes">{!! strip_tags($ticket['lastchat']['message']) !!}</p>
-                                            <span class="chatTime">{{$formattedTime}}</span>
-                                        </div>
-                                    </div>
-                                    @if($ticket['unread'] != 0)
-                                    <span class="chatCount">{{$ticket['unread']}}</span>
-                                    @endif
-                                </li>
-                            @endforeach
-                            @else
-                                    
-
-                            @endif
-                            </ul>
+                            @include('ticket-list', ['tickets' => $tickets])
                         </div>
                     </aside>
 
@@ -329,7 +306,7 @@
                         <!-- Messages Area with Scroll Fix -->
                         <div id="chatMessages"
                             class="relative h-[35vh] md:h-[70vh] overflow-y-auto pt-[40px] px-[10px] py-[10px] md:px-[20px] md:py-[20px] xl:px-[30px] xl:py-[30px] space-y-4 z-[1]">
-
+                                
                             <div class="text-left">
                                 <div
                                     class="chatwindowMsg relative inline-flex flex-col bg-gray-100 p-[12px] lg:text-[15px]  text-sm  shadow-md rounded-[10px] rounded-tl-[0]">
@@ -558,7 +535,7 @@
                 const inputBar = document.getElementById('chatInputBar');
                 const closedMessage = document.getElementById('chatClosedMessage');
 
-
+                refreshTicketList();
                 // Update chat header
                 headerUser.textContent = data.ticket.tracking.offer_name;
 
@@ -573,6 +550,15 @@
                 // Clear chat area
                 chatWindow.innerHTML = '';
 
+                // Add "Ticket Opened" banner
+                const openBanner = document.createElement('div');
+                openBanner.className = 'groupAdded w-full text-[13px] font-[600] text-[#49fb53] text-center z-[9]';
+                openBanner.innerHTML = `
+                    <div class="w-auto inline-flex shadow-md bg-white px-[10px] py-[5px] rounded-[4px] mx-auto">
+                        Ticket Opened
+                    </div>
+                `;
+                chatWindow.appendChild(openBanner);
                 // Add each message
                 data.messages.forEach(msg => {
                     const msgWrapper = document.createElement('div');
@@ -583,14 +569,12 @@
                         ? 'chatwindowMsg relative inline-block bg-green-100 text-green-800 text-sm p-[12px] lg:text-[15px] rounded-[10px] rounded-tl-[0] shadow-md'
                         : 'chatwindowMsg relative inline-flex flex-col bg-gray-100 p-[12px] lg:text-[15px] text-sm shadow-md rounded-[10px] rounded-tl-[0]';
 
-                    // Arrow div
                     const arrow = document.createElement('div');
                     arrow.className = msg.from == "user"
                         ? 'absolute top-2 right-[-15px] w-0 h-0 border-t-[15px] border-t-transparent border-b-[15px] border-b-transparent border-l-[15px] border-l-green-100'
                         : 'absolute top-2 left-[-15px] w-0 h-0 border-t-[15px] border-t-transparent border-b-[15px] border-b-transparent border-r-[15px] border-r-gray-100';
                     bubble.appendChild(arrow);
 
-                    // Message text
                     const msgText = document.createElement('p');
                     msgText.className = 'text-[12px] xl:text-[13px]';
                     msgText.innerHTML = msg.message || msg.media;
@@ -598,46 +582,78 @@
 
                     const timestamp = document.createElement('div');
                     timestamp.className = 'chatWindowDate';
-
                     const time = new Date(msg.created_at);
-
                     const day = time.getDate();
                     const month = time.toLocaleString('default', { month: 'short' });
                     const year = time.getFullYear();
                     const formattedDate = `${day} ${month} ${year}`;
                     const formattedTime = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
-
                     timestamp.innerHTML = `${formattedDate} <div class="text-[12px] text-black font-[600]">${formattedTime}</div>`;
                     bubble.appendChild(timestamp);
 
                     msgWrapper.appendChild(bubble);
                     chatWindow.appendChild(msgWrapper);
                 });
+
+                // ✅ Append "Ticket Closed" only if ticket is closed
+                if (data.ticket.status == 2) {
+                    const closedBanner = document.createElement('div');
+                    closedBanner.className = 'groupClosed w-full text-[13px] font-[600] text-[#ff5b5b] text-center z-[9]';
+                    closedBanner.innerHTML = `<br>
+                        <div class="w-auto inline-flex shadow-md bg-white px-[10px] py-[5px] rounded-[4px] mx-auto">
+                            Ticket Closed.
+                        </div>
+                    `;
+                    chatWindow.appendChild(closedBanner);
+                }
                 chatWindow.scrollTop = chatWindow.scrollHeight;
             });
     }
 
+    function refreshTicketList() {
+        fetch('/refresh-tickets')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('myDiv').innerHTML = html;
+            });
+    }
 
     function addMessage() {
-        const message = document.getElementById('msgInput').value.trim();
         const ticketId = window.currentTicketId;
-        const fileInput = document.getElementById('fileInput');
-        const file = fileInput.files[0];
 
-        // Send text message (if exists)
-        if (message) {
+        // Get the HTML content from Summernote
+        let content = $('#msgInput').summernote('code').trim();
+
+        // Convert <img> tags to <a> download links
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = content;
+
+        const images = tempDiv.querySelectorAll('img');
+        images.forEach(img => {
+            const src = img.getAttribute('src');
+            if (src) {
+                const a = document.createElement('a');
+                a.setAttribute('href', src);
+                a.innerHTML = '🖼️ Attachment';
+
+                img.parentNode.replaceChild(a, img);
+            }
+        });
+
+        const finalMessage = tempDiv.innerHTML.trim();
+
+        if (finalMessage) {
             $.ajax({
                 url: '{{ route("sendMessage") }}',
                 method: 'POST',
                 data: {
                     _token: '{{ csrf_token() }}',
-                    message: message,
+                    message: finalMessage,
                     ticket_id: ticketId
                 },
                 success: function (response) {
                     $('#msgInput').summernote('reset');
                     toastr.success(response.message || 'Message Sent');
-                    document.getElementById('msgInput').value = ''; 
                     loadConversation(ticketId);
                 },
                 error: function (xhr) {
@@ -646,32 +662,41 @@
                 }
             });
         }
-
-        // Send file message (if file exists)
-        if (file) {
-            const formData = new FormData();
-            formData.append('_token', '{{ csrf_token() }}');
-            formData.append('ticket_id', ticketId);
-            formData.append('media', file);
-
-            $.ajax({
-                url: '{{ route("sendMessage") }}',
-                method: 'POST',
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function (response) {
-                    fileInput.value = '';
-                    toastr.success('File Sent');
-                    loadConversation(ticketId);
-                },
-                error: function (xhr) {
-                    alert('File failed to send');
-                    console.log(xhr.responseText);
-                }
-            });
-        }
     }
+
+     document.getElementById('fileInput').addEventListener('change', function () {
+        const file = this.files[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append('attachment', file);
+
+        // CSRF token if using Laravel
+        formData.append('_token', '{{ csrf_token() }}');
+
+        fetch('/upload-attachment', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                const imageUrl = data.url;
+                const fileName = file.name;
+
+                // Insert a downloadable link with an icon into the Summernote editor
+                const icon = '<svg xmlns="http://www.w3.org/2000/svg" class="inline w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M3 3a1 1 0 011-1h3.586a1 1 0 01.707.293l8.414 8.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-3.586a1 1 0 01-.707-.293L3.293 5.707A1 1 0 013 5V3z"/></svg>';
+
+                $('#msgInput').summernote('pasteHTML', `<img src="${imageUrl}" alt="${fileName}" style="max-width:50%; height:auto; margin-bottom:10px;" /><br/>`);    
+            } else {
+                alert('File upload failed');
+            }
+        })
+        .catch(err => {
+            console.error('Upload error:', err);
+            alert('Upload failed.');
+        });
+    });
 </script>
 
 
