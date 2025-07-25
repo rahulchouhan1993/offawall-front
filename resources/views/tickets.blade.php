@@ -137,15 +137,11 @@
                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22H4ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13Z"></path></svg>
                   <span class="countBxHead">
-                    @if(count($tickets) > 0)
-                        @if($tickets[0]['total_unread'] != 0)
-                           {{$tickets[0]['total_unread']}}
+                        @if($unreadTickets != 0)
+                           {{$unreadTickets}}
                         @else
                             {{''}}
                         @endif
-                    @else
-                        {{''}}
-                    @endif
                     </span>
                    </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -628,18 +624,6 @@
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = content;
 
-        const images = tempDiv.querySelectorAll('img');
-        images.forEach(img => {
-            const src = img.getAttribute('src');
-            if (src) {
-                const a = document.createElement('a');
-                a.setAttribute('href', src);
-                a.innerHTML = '🖼️ Attachment';
-
-                img.parentNode.replaceChild(a, img);
-            }
-        });
-
         const finalMessage = tempDiv.innerHTML.trim();
 
         if (finalMessage) {
@@ -682,12 +666,11 @@
         .then(data => {
             if (data.success) {
                 const imageUrl = data.url;
-                const fileName = file.name;
 
                 // Insert a downloadable link with an icon into the Summernote editor
                 const icon = '<svg xmlns="http://www.w3.org/2000/svg" class="inline w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path d="M3 3a1 1 0 011-1h3.586a1 1 0 01.707.293l8.414 8.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-3.586a1 1 0 01-.707-.293L3.293 5.707A1 1 0 013 5V3z"/></svg>';
 
-                $('#msgInput').summernote('pasteHTML', `<img src="${imageUrl}" alt="${fileName}" style="max-width:50%; height:auto; margin-bottom:10px;" /><br/>`);    
+                $('#msgInput').summernote('pasteHTML', `<a href="${imageUrl}" >Attachment</a><br/>`);    
             } else {
                 alert('File upload failed');
             }

@@ -14,6 +14,7 @@ use App\Models\AppBlocker;
 use App\Models\TrafficTracking;
 use App\Models\ConversionErrorTracker;
 use App\Models\Tickets;
+use App\Models\TicketsChats;
 use Jenssegers\Agent\Agent;
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
@@ -121,14 +122,19 @@ class DashboardController extends Controller
             $requestedParams['sub6'] = NULL;
         }
 
+        $unreadTickets = 0;
         if(Auth::check()){
             $tickets = Tickets::where('user_id',Auth::user()->id)->with(['tracking:id,offer_name','lastchat:id,message,media,ticket_id,created_at,updated_at'])->orderBy('updated_at','DESC')->get();
+
+            $unreadTickets = TicketsChats::whereHas('ticket',function($q){
+                $q->where('user_id',Auth::id());
+            })->where('from','admin')->where('is_read_user',0)->count();
         }
         else{
             return view('login',compact('offerWallTemplate','appDetails','requestedParams','offerSettings'));
         }
 
-        return view('tickets',compact('offerWallTemplate','appDetails','requestedParams','offerSettings','tickets'));
+        return view('tickets',compact('offerWallTemplate','appDetails','requestedParams','offerSettings','tickets','unreadTickets'));
     }
 
     public function index(Request $request){
@@ -237,7 +243,15 @@ class DashboardController extends Controller
             $isVpn = false;
         }
 
-        return view('offerwall',compact('allOffers','offerWallTemplate','offerSettings','appDetails','deviceType','cookieValue','requestedParams','userCountry','isVpn','operatingSystem','featuredOffer'));
+         $unreadTickets = 0;
+        if(Auth::check()){
+
+            $unreadTickets = TicketsChats::whereHas('ticket',function($q){
+                $q->where('user_id',Auth::id());
+            })->where('from','admin')->where('is_read_user',0)->count();
+        }
+
+        return view('offerwall',compact('allOffers','offerWallTemplate','offerSettings','appDetails','deviceType','cookieValue','requestedParams','userCountry','isVpn','operatingSystem','featuredOffer','unreadTickets'));
     }
 
     public function detectDeviceType(){
@@ -834,7 +848,15 @@ class DashboardController extends Controller
         if(!isset($requestedParams['sub6'])){
             $requestedParams['sub6'] = NULL;
         }
-        return view('completedoffers',compact('allOffers','offerWallTemplate','appDetails','requestedParams','offerSettings','userLoggedIn'));
+
+        $unreadTickets = 0;
+
+        if(Auth::check()){
+            $unreadTickets = TicketsChats::whereHas('ticket',function($q){
+                $q->where('user_id',Auth::id());
+            })->where('from','admin')->where('is_read_user',0)->count();
+        }
+        return view('completedoffers',compact('allOffers','offerWallTemplate','appDetails','requestedParams','offerSettings','userLoggedIn','unreadTickets'));
         
     }
 
