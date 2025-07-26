@@ -9,7 +9,7 @@ class Tickets extends Model
 {
     protected $fillable = ['tracking_id', 'user_id', 'status'];
 
-    protected $appends = ['unread','total_unread'];
+    protected $appends = ['unread'];
 
     public function chats()
     {
@@ -29,12 +29,6 @@ class Tickets extends Model
 
     public function getUnreadAttribute(){
         $count = TicketsChats::where('ticket_id',$this->id)->where('is_read_user',0)->where('from','admin')->count();
-
-        return $count;
-    }
-
-    public function getTotalUnreadAttribute(){
-        $count = TicketsChats::where('is_read_user',0)->where('from','admin')->count();
 
         return $count;
     }
