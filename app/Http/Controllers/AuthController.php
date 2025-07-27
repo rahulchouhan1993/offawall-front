@@ -47,7 +47,7 @@ class AuthController extends Controller
             'sub4' => $request->sub4,
             'sub5' => $request->sub5,
             'sub6' => $request->sub6
-        ])->with('success','Registration Successfull. Please check your mail inbox and verify your email.');
+        ])->with('success','Registration Successful. Please check your inbox and verify your email.');
 
     }
 
@@ -177,6 +177,6 @@ class AuthController extends Controller
         Mail::to($user->email)->send(new ForgotPasswordMail($user, $request->apiKey, $request->wallId, $request->userId, $request->sub4, $request->sub5, $request->sub6,$newPassword));
 
 
-        return redirect()->back()->with('success','We have send you a mail to reset your password.');
+        return redirect()->back()->with('success','We have sent you an email to reset your password.');
     }
 }
