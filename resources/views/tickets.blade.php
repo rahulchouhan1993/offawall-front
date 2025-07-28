@@ -306,42 +306,7 @@
                         <!-- Messages Area with Scroll Fix -->
                         <div id="chatMessages"
                             class="relative h-[35vh] md:h-[70vh] overflow-y-auto pt-[40px] px-[10px] py-[10px] md:px-[20px] md:py-[20px] xl:px-[30px] xl:py-[30px] space-y-4 z-[1]">
-                            @if(count($tickets) > 0)
-                            <div class="text-left">
-                                <div
-                                    class="chatwindowMsg relative inline-flex flex-col bg-gray-100 p-[12px] lg:text-[15px]  text-sm  shadow-md rounded-[10px] rounded-tl-[0]">
-                                    <div class="absolute top-2 left-[-15px] w-0 h-0 border-t-[15px] border-t-transparent border-b-[15px] border-b-transparent border-r-[15px] border-r-gray-100">
-                                    </div>
-
-                                    <p class="text-[12px] xl:text-[13px]">
-                                    </p>
-
-                                    <div class="chatWindowDate ">
-                                         <div class="chatWindowTime text-[12px] text-black font-[600]"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-                            <div class="text-right">
-                                <div
-                                    class="chatwindowMsg relative inline-block bg-green-100 text-green-800 text-sm p-[12px] lg:text-[15px] rounded-[10px] rounded-tl-[0] shadow-md">
-                                    <div
-                                        class="absolute top-2 right-[-15px] w-0 h-0 border-t-[15px] border-t-transparent border-b-[15px] border-b-transparent border-l-[15px] border-l-green-100">
-                                    </div>
-                                    <p class="text-[12px] xl:text-[13px]">
-                                        
-                                    </p>
-
-                                    <div class="chatWindowDate">
-                                         <div class="text-[12px] text-black font-[600]"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            @endif
+                            
                         </div>
 
                         <!-- Input Box (Fixed on Mobile) -->
@@ -357,7 +322,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M15.172 7l-6.586 6.586a2 2 0 002.828 2.828l6.586-6.586A4 4 0 1012 3.172l-6.586 6.586" />
                                     </svg>
-                                    <span class="text-[0] md:text-[15px]">Attach</span>
+                                    <!-- <span class="text-[0] md:text-[15px]">Attach</span> -->
                                 </label>
                                 <input id="fileInput" type="file" class="hidden" />
                             </div>
@@ -375,7 +340,7 @@
                             </form>
                         </div>
                         <!-- Ticket Closed Message -->
-                        <div id="chatClosedMessage" class="chatwindowAreaBx hidden text-center text-sm text-gray-600 p-4 w-full border-t bg-gray-100 z-[999]">
+                        <div id="chatClosedMessage" style="display: none;" class="chatwindowAreaBx hidden text-center text-sm text-gray-600 p-4 w-full border-t bg-gray-100 z-[999]">
                             This ticket has been closed by the admin. You cannot send further messages.
                         </div>
                         @endif
@@ -518,8 +483,17 @@
 
     document.addEventListener("DOMContentLoaded", function () {
         var tickets = @json($tickets); // Correct way to pass PHP array to JS
+        var ticket_id = "{{ $ticketId }}";
+        if(ticket_id > 0){
+            var ticketId = ticket_id;
+            loadConversation(ticketId);
+            const url = new URL(window.location.href);
 
-        if (tickets.length > 0) {
+            url.searchParams.delete('offerId');
+
+            window.history.replaceState({}, '', url.toString());
+        }
+        else if (tickets.length > 0) {
             var ticketId = tickets[0].id;
             loadConversation(ticketId);
         }
@@ -559,6 +533,8 @@
                     <div class="w-auto inline-flex shadow-md bg-white px-[10px] py-[5px] rounded-[4px] mx-auto">
                         Ticket Opened
                     </div>
+
+                   
                 `;
                 chatWindow.appendChild(openBanner);
                 // Add each message
@@ -602,7 +578,7 @@
                     const closedBanner = document.createElement('div');
                     closedBanner.className = 'groupClosed w-full text-[13px] font-[600] text-[#ff5b5b] text-center z-[9]';
                     closedBanner.innerHTML = `<br>
-                        <div class="w-auto inline-flex shadow-md bg-white px-[10px] py-[5px] rounded-[4px] mx-auto">
+                        <div class="w-auto inline-flex shadow-md bg-white px-[10px] py-[5px] rounded-[4px] mx-auto bg-[]">
                             Ticket Closed.
                         </div>
                     `;

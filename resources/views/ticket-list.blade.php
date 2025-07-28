@@ -7,10 +7,8 @@
 
             if ($updatedAt->isToday()) {
                 $formattedTime = 'Today ' . $updatedAt->format('h:i A');
-            } elseif ($updatedAt->isYesterday()) {
-                $formattedTime = 'Yesterday ' . $updatedAt->format('h:i A');
-            } else {
-                $formattedTime = $updatedAt->format('l h:i A');
+            }else {
+                $formattedTime = $updatedAt->format('D h:i A');
             }
         @endphp
 

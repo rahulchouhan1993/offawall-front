@@ -114,8 +114,8 @@
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                   @guest
                   <li>
-                     <a class="active" href="{{ route('login', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
-                        style="display: block; padding: 14px 10px; font-size: 15px; border-bottom: 1px solid transparent; text-decoration: none;font-family: Open Sans; background: {{ $offerWallTemplate->headerActiveBg }}">
+                     <a href="{{ route('login', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
+                        style="display: block; padding: 14px 10px; font-size: 15px; color: {{ $offerWallTemplate->headerNonActiveTextColor }}; border-bottom: 1px solid transparent; text-decoration: none;font-family: Open Sans;">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22H18C18 18.6863 15.3137 16 12 16C8.68629 16 6 18.6863 6 22H4ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11Z"></path></svg> Login
                      </a>
                   </li>
@@ -160,13 +160,7 @@
                     <div class="boxList" style="display: flex; align-items: center; flex-wrap:wrap; gap: 20px; padding: 20px;     box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2); border-radius:15px; background: {{ $offerWallTemplate->offerBg }}; border: 1px solid {{ $offerWallTemplate->offerBg }}; width: 100%;">
 
                     {{-- Top-right ticket icon --}}
-                    @if(!empty($offer['ticket_id']))
-                    <div style="position: relative; top: 0px; right: 0px;" title="Ticket created for this reward.">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#4CAF50" viewBox="0 0 24 24">
-                            <path d="M12 0C5.37109 0 0 5.37109 0 12C0 18.6289 5.37109 24 12 24C18.6289 24 24 18.6289 24 12C24 5.37109 18.6289 0 12 0ZM10.2422 17.3203L4.92188 12L6.33594 10.5859L10.2422 14.4922L17.6641 7.07031L19.0781 8.48438L10.2422 17.3203Z" />
-                        </svg>
-                    </div>
-                    @endif
+                    
 
                         <div style="width: 100%; display: flex ; align-items: center; gap:10px;">
 
@@ -212,34 +206,39 @@
                             </svg>
                             <h2 style="font-size: 13px; color: {{ $offerWallTemplate->offerBg }}; margin: 0; font-weight: 600;">{{ ($trackingDetails->click_time) ? date('d M Y',strtotime($trackingDetails->click_time)) : date('d M Y',strtotime($trackingDetails->created_at)) }}</h2>
                         </div>
-                        <div style="display: flex ; justify-content: space-between; align-items: center; gap: 4px;">
-                        
+                        <div style="display: flex ; justify-content: space-between; align-items: center; gap: 4px; cursor: pointer;">
+                        @if($offer['ticket_id']>0)
+                    
+                    
+                        <a href="{{ route('tickets', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6'], 'offerId' => $trackingDetails->id]) }}" ><svg  xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="{{ $offerWallTemplate->offerBg }}"><path d="M2.00488 3.99979C2.00488 3.4475 2.4526 2.99979 3.00488 2.99979H21.0049C21.5572 2.99979 22.0049 3.4475 22.0049 3.99979V9.49979C20.6242 9.49979 19.5049 10.6191 19.5049 11.9998C19.5049 13.3805 20.6242 14.4998 22.0049 14.4998V19.9998C22.0049 20.5521 21.5572 20.9998 21.0049 20.9998H3.00488C2.4526 20.9998 2.00488 20.5521 2.00488 19.9998V3.99979ZM8.09024 18.9998C8.29615 18.4172 8.85177 17.9998 9.50488 17.9998C10.158 17.9998 10.7136 18.4172 10.9195 18.9998H20.0049V16.032C18.5232 15.2957 17.5049 13.7666 17.5049 11.9998C17.5049 10.2329 18.5232 8.7039 20.0049 7.96755V4.99979H10.9195C10.7136 5.58238 10.158 5.99979 9.50488 5.99979C8.85177 5.99979 8.29615 5.58238 8.09024 4.99979H4.00488V18.9998H8.09024ZM9.50488 10.9998C8.67646 10.9998 8.00488 10.3282 8.00488 9.49979C8.00488 8.67136 8.67646 7.99979 9.50488 7.99979C10.3333 7.99979 11.0049 8.67136 11.0049 9.49979C11.0049 10.3282 10.3333 10.9998 9.50488 10.9998ZM9.50488 15.9998C8.67646 15.9998 8.00488 15.3282 8.00488 14.4998C8.00488 13.6714 8.67646 12.9998 9.50488 12.9998C10.3333 12.9998 11.0049 13.6714 11.0049 14.4998C11.0049 15.3282 10.3333 15.9998 9.50488 15.9998Z"></path></svg></a>
+                        <a href="{{ route('tickets', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6'], 'offerId' => $trackingDetails->id]) }}" ><h2 style="font-size: 13px; color: {{ $offerWallTemplate->offerBg }}; margin: 0; font-weight: 600;">Preview Ticket</h2></a>
+                   
+                    @else
+                       
+                        <svg onclick="openPopup(this,{{ $trackingDetails->id }})" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="{{ $offerWallTemplate->offerBg }}"><path d="M2.00488 3.99979C2.00488 3.4475 2.4526 2.99979 3.00488 2.99979H21.0049C21.5572 2.99979 22.0049 3.4475 22.0049 3.99979V9.49979C20.6242 9.49979 19.5049 10.6191 19.5049 11.9998C19.5049 13.3805 20.6242 14.4998 22.0049 14.4998V19.9998C22.0049 20.5521 21.5572 20.9998 21.0049 20.9998H3.00488C2.4526 20.9998 2.00488 20.5521 2.00488 19.9998V3.99979ZM8.09024 18.9998C8.29615 18.4172 8.85177 17.9998 9.50488 17.9998C10.158 17.9998 10.7136 18.4172 10.9195 18.9998H20.0049V16.032C18.5232 15.2957 17.5049 13.7666 17.5049 11.9998C17.5049 10.2329 18.5232 8.7039 20.0049 7.96755V4.99979H10.9195C10.7136 5.58238 10.158 5.99979 9.50488 5.99979C8.85177 5.99979 8.29615 5.58238 8.09024 4.99979H4.00488V18.9998H8.09024ZM9.50488 10.9998C8.67646 10.9998 8.00488 10.3282 8.00488 9.49979C8.00488 8.67136 8.67646 7.99979 9.50488 7.99979C10.3333 7.99979 11.0049 8.67136 11.0049 9.49979C11.0049 10.3282 10.3333 10.9998 9.50488 10.9998ZM9.50488 15.9998C8.67646 15.9998 8.00488 15.3282 8.00488 14.4998C8.00488 13.6714 8.67646 12.9998 9.50488 12.9998C10.3333 12.9998 11.0049 13.6714 11.0049 14.4998C11.0049 15.3282 10.3333 15.9998 9.50488 15.9998Z"></path></svg>
+                        <h2 onclick="openPopup(this,{{ $trackingDetails->id }})" style="font-size: 13px; color: {{ $offerWallTemplate->offerBg }}; margin: 0; font-weight: 600;">Create Ticket</h2>
+                    
+                    @endif
+                        <p style="color:{{ $offerWallTemplate->offerBg }}">|</p>
                         <svg style="width: 18px; height: 18px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="{{ $offerWallTemplate->offerBg }}"><path d="M17.6177 5.9681L19.0711 4.51472L20.4853 5.92893L19.0319 7.38231C20.2635 8.92199 21 10.875 21 13C21 17.9706 16.9706 22 12 22C7.02944 22 3 17.9706 3 13C3 8.02944 7.02944 4 12 4C14.125 4 16.078 4.73647 17.6177 5.9681ZM12 20C15.866 20 19 16.866 19 13C19 9.13401 15.866 6 12 6C8.13401 6 5 9.13401 5 13C5 16.866 8.13401 20 12 20ZM11 8H13V14H11V8ZM8 1H16V3H8V1Z"></path></svg>
                             <h2 style="font-size: 13px; color: {{ $offerWallTemplate->offerBg }}; margin: 0; font-weight: 600;">{{ ($trackingDetails->status) ? 'Completed' : 'Pending'; }}</h2>
                         </div>
                         
                         </div>
-                        @if(empty($offer['ticket_id']))
-                        <div onclick="openPopup(this,{{$trackingDetails->id}})">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#555" viewBox="0 0 24 24">
-                                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02
-                                0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0L15.13 4.9l3.75 3.75 1.83-1.61z"/>
-                            </svg>
-                        </div>
-                        @endif
+                        
                     </div>
 
 
                     <div id="descriptionModal_{{$trackingDetails->id}}" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:1000;">
                         <div style="background:#fff; padding:20px; border-radius:10px; width: 800px; max-width: 90%;">
-                            <h3 style="margin-bottom: 20px;">Describe your case, so that it helps us to investigate this further.</h3>
-                            <label for="offer_name_id_{{$trackingDetails->id}}" style="margin-right:20px;margin-bottom:20px">Offer Name</label>
-                            <input type="text" id="offer_name_id_{{$trackingDetails->id}}" value="{{ $trackingDetails->offer_name }}" size="50" disabled> <br>
-                            <label for="offer_name_id_{{$trackingDetails->id}}" style="margin-right:20px;margin-bottom:20px">Description</label>
+                            <h3 style="margin-bottom: 20px; font-weight: 600; font-size: 18px; color: #220b10;">Describe your case, so that it helps us to investigate this further.</h3>
+                            <label for="offer_name_id_{{$trackingDetails->id}}" style="width:100%; margin-right:20px;margin-bottom:5px">Offer Name</label>
+                            <input style="margin-bottom: 20px; width: 100%; padding: 14px 13px; border: 1px solid #d6d6d6; font-size: 14px; color: #000; border-radius: 5px;" type="text" id="offer_name_id_{{$trackingDetails->id}}" value="{{ $trackingDetails->offer_name }}" size="50" disabled> <br>
+                            <label for="offer_name_id_{{$trackingDetails->id}}" style="margin-right:20px;margin-bottom:5px">Description</label>
                             <textarea id="popupDescription_{{$trackingDetails->id}}" class="w-full flex-1 py-[15px] px-[30px] border-none bg-[#f2f2f2] rounded-[80px] text-[11px] md:text-[15px] text-black focus:outline-none"></textarea> <br>
                             <input type="hidden" id="offer_id_{{$trackingDetails->id}}" value="{{ $trackingDetails->id }}">
                             <div style="text-align: right;">
-                                <button onclick="submitDescription({{$trackingDetails->id}})" style="padding: 6px 12px; background: #28a745; color: #fff; border: none; border-radius: 4px;">Submit</button>
+                                <button onclick="submitDescription({{$trackingDetails->id}})" style="padding: 6px 12px; background: #00fc42; color: #220b10; border: none; border-radius: 4px;">Submit</button>
                                 <button onclick="closePopup({{$trackingDetails->id}})" style="padding: 6px 12px; background: #dc3545; color: #fff; border: none; border-radius: 4px;">Cancel</button>
                             </div>
                         </div>
@@ -298,6 +297,32 @@
         } else {
             window.location.href = ticketRoute;
         }
+    }
+
+    function openTicket(id){
+        $.ajax({
+            url: '{{ route("createTicket") }}', // Define this route in web.php
+            type: 'POST',
+            data: {_token: '{{ csrf_token() }}',
+                    message: description,
+                    tracking_id: offerId
+                    },
+            success: function(response) {
+                
+                toastr.success(response.message || 'Description saved!');
+                closePopup(id);
+                setTimeout(function () {
+                    window.location.href = `{!! route("tickets", ["apiKey" => $requestedParams["apiKey"], "wallId" => $requestedParams["wallId"], "userId" => $requestedParams["userId"], "sub4" => $requestedParams["sub4"], "sub5" => $requestedParams["sub5"], "sub6" => $requestedParams["sub6"]]) !!}`;
+                }, 1000);
+            },
+            error: function(xhr) {
+                let errorMessage = 'Something went wrong.';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMessage = xhr.responseJSON.message;
+                }
+                toastr.error(errorMessage);
+            }
+        });
     }
 
     function closePopup(id) {
