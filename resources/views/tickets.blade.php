@@ -303,6 +303,7 @@
                         <div id="chatMessages"
                             class="relative h-[35vh] md:h-[70vh] overflow-y-auto pt-[40px] px-[10px] py-[10px] md:px-[20px] md:py-[20px] xl:px-[30px] xl:py-[30px] space-y-4 z-[1]">
                                 
+                            <div class="ticketClosed">Ticket Closed</div>
                             <div class="text-left">
                                 <div
                                     class="chatwindowMsg relative inline-flex flex-col bg-gray-100 p-[12px] lg:text-[15px]  text-sm  shadow-md rounded-[10px] rounded-tl-[0]">
@@ -352,7 +353,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M15.172 7l-6.586 6.586a2 2 0 002.828 2.828l6.586-6.586A4 4 0 1012 3.172l-6.586 6.586" />
                                     </svg>
-                                    <span class="text-[0] md:text-[15px]">Attach</span>
+                                    <!-- <span class="text-[0] md:text-[15px]">Attach</span> -->
                                 </label>
                                 <input id="fileInput" type="file" class="hidden" />
                             </div>
@@ -553,6 +554,8 @@
                     <div class="w-auto inline-flex shadow-md bg-white px-[10px] py-[5px] rounded-[4px] mx-auto">
                         Ticket Opened
                     </div>
+
+                   
                 `;
                 chatWindow.appendChild(openBanner);
                 // Add each message
@@ -596,7 +599,7 @@
                     const closedBanner = document.createElement('div');
                     closedBanner.className = 'groupClosed w-full text-[13px] font-[600] text-[#ff5b5b] text-center z-[9]';
                     closedBanner.innerHTML = `<br>
-                        <div class="w-auto inline-flex shadow-md bg-white px-[10px] py-[5px] rounded-[4px] mx-auto">
+                        <div class="w-auto inline-flex shadow-md bg-white px-[10px] py-[5px] rounded-[4px] mx-auto bg-[]">
                             Ticket Closed.
                         </div>
                     `;
