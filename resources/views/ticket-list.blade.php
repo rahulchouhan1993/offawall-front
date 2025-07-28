@@ -3,7 +3,7 @@
 @foreach($tickets as $ticket)
         @php
 
-            $updatedAt = \Carbon\Carbon::parse($ticket['lastchat']['created_at'])->timezone('Asia/Kolkata');;
+            $updatedAt = \Carbon\Carbon::parse($ticket['lastchat']['created_at']);
 
             if ($updatedAt->isToday()) {
                 $formattedTime = 'Today ' . $updatedAt->format('h:i A');
