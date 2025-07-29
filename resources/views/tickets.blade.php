@@ -267,19 +267,23 @@
 
                     <!-- Chat Window -->
                     <main class="chatwindowMain">
+                        @if(count($tickets) == 0)
                         <div
-                            class="chatwindowLogo">
+                            class="chatwindowLogo absolute top-[0] bottom-[0] left-[0] right-[0] m-auto flex flex-col items-center justify-center gap-[25px]">
+                            <div class="min-w-[150px] px-[8px] py-[8px] rounded-[4px] text-[15px] bg-[#f8d7da] text-[#ff001b] text-center border-[1px] border-[#f1aeb5]">No Ticket</div>
                             <img src="/images/logo.png" alt="img">
                         </div>
+                        @endif
                         <!-- Header -->
                         <div class="chatwindowHeader px-[10px] py-[10px] border-b flex items-center justify-between gap-3 bg-white z-10">
+                            @if(count($tickets) > 0)
                             <div class="chatwindowUser flex items-center gap-[5px]">
                                 <img src="/images/user.webp" class="" />
                                 <div>
                                     <p class="mb-[0]"></p>
                                 </div>
                             </div>
-
+                            @endif
                             <div class="chatwindowDrop relative flex items-center">
                                 <!-- <button  onclick="toggleDropdown3(event)"
                                     class="p-[0] w-[35px] h-[35px] flex items-center justify-center text-black rounded-[40px] bg-[#f2f2f2] focus:outline-none">
@@ -302,46 +306,11 @@
                         <!-- Messages Area with Scroll Fix -->
                         <div id="chatMessages"
                             class="relative h-[35vh] md:h-[70vh] overflow-y-auto pt-[40px] px-[10px] py-[10px] md:px-[20px] md:py-[20px] xl:px-[30px] xl:py-[30px] space-y-4 z-[1]">
-                                
-                            <div class="ticketClosed">Ticket Closed</div>
-                            <div class="text-left">
-                                <div
-                                    class="chatwindowMsg relative inline-flex flex-col bg-gray-100 p-[12px] lg:text-[15px]  text-sm  shadow-md rounded-[10px] rounded-tl-[0]">
-                                    <div class="absolute top-2 left-[-15px] w-0 h-0 border-t-[15px] border-t-transparent border-b-[15px] border-b-transparent border-r-[15px] border-r-gray-100">
-                                    </div>
-
-                                    <p class="text-[12px] xl:text-[13px]">
-                                    </p>
-
-                                    <div class="chatWindowDate ">
-                                         <div class="chatWindowTime text-[12px] text-black font-[600]"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-                            <div class="text-right">
-                                <div
-                                    class="chatwindowMsg relative inline-block bg-green-100 text-green-800 text-sm p-[12px] lg:text-[15px] rounded-[10px] rounded-tl-[0] shadow-md">
-                                    <div
-                                        class="absolute top-2 right-[-15px] w-0 h-0 border-t-[15px] border-t-transparent border-b-[15px] border-b-transparent border-l-[15px] border-l-green-100">
-                                    </div>
-                                    <p class="text-[12px] xl:text-[13px]">
-                                        
-                                    </p>
-
-                                    <div class="chatWindowDate">
-                                         <div class="text-[12px] text-black font-[600]"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-
+                            
                         </div>
 
                         <!-- Input Box (Fixed on Mobile) -->
+                        @if(count($tickets) > 0)
                         <div id="chatInputBar" 
                             class="chatwindowAreaBx flex gap-[6px] md:gap-[10px] p-[10px] md:p-[13px] border-t  mobile-fixed md:relative z-[999] w-full">
                             <form onsubmit="event.preventDefault(); addMessage();" enctype="multipart/form-data" class="w-full flex items-center gap-2">
@@ -370,11 +339,12 @@
                                     </svg></button>
                             </form>
                         </div>
-
                         <!-- Ticket Closed Message -->
-                        <div id="chatClosedMessage" class="chatwindowAreaBx hidden text-center text-sm text-gray-600 p-4 w-full border-t bg-gray-100 z-[999]">
+                        <div id="chatClosedMessage" style="display: none;" class="chatwindowAreaBx hidden text-center text-sm text-gray-600 p-4 w-full border-t bg-gray-100 z-[999]">
                             This ticket has been closed by the admin. You cannot send further messages.
                         </div>
+                        @endif
+
                     </main>
 
                 </div>
@@ -513,8 +483,17 @@
 
     document.addEventListener("DOMContentLoaded", function () {
         var tickets = @json($tickets); // Correct way to pass PHP array to JS
+        var ticket_id = "{{ $ticketId }}";
+        if(ticket_id > 0){
+            var ticketId = ticket_id;
+            loadConversation(ticketId);
+            const url = new URL(window.location.href);
 
-        if (tickets.length > 0) {
+            url.searchParams.delete('offerId');
+
+            window.history.replaceState({}, '', url.toString());
+        }
+        else if (tickets.length > 0) {
             var ticketId = tickets[0].id;
             loadConversation(ticketId);
         }
@@ -573,7 +552,7 @@
                         ? 'absolute top-2 right-[-15px] w-0 h-0 border-t-[15px] border-t-transparent border-b-[15px] border-b-transparent border-l-[15px] border-l-green-100'
                         : 'absolute top-2 left-[-15px] w-0 h-0 border-t-[15px] border-t-transparent border-b-[15px] border-b-transparent border-r-[15px] border-r-gray-100';
                     bubble.appendChild(arrow);
-
+                    
                     const msgText = document.createElement('p');
                     msgText.className = 'text-[12px] xl:text-[13px]';
                     msgText.innerHTML = msg.message || msg.media;
@@ -583,10 +562,10 @@
                     timestamp.className = 'chatWindowDate';
                     const time = new Date(msg.created_at);
                     const day = time.getDate();
-                    const month = time.toLocaleString('default', { month: 'short' });
+                    const month = time.toLocaleString('default', { month: 'short', timeZone: 'UTC' });
                     const year = time.getFullYear();
                     const formattedDate = `${day} ${month} ${year}`;
-                    const formattedTime = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+                    const formattedTime = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true, timeZone: 'UTC' });
                     timestamp.innerHTML = `${formattedDate} <div class="text-[12px] text-black font-[600]">${formattedTime}</div>`;
                     bubble.appendChild(timestamp);
 

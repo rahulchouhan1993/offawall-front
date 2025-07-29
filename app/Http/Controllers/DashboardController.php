@@ -122,6 +122,14 @@ class DashboardController extends Controller
             $requestedParams['sub6'] = NULL;
         }
 
+        $ticketId = 0;
+        if(!isset($requestedParams['offerId'])){
+            $requestedParams['offerId'] = NULL;
+        }
+        else{
+            $ticketId = Tickets::where('tracking_id',$requestedParams['offerId'] ?? NULL)->first()?->id;
+        }
+
         $unreadTickets = 0;
         if(Auth::check()){
             $tickets = Tickets::where('user_id',Auth::user()->id)->with(['tracking:id,offer_name','lastchat:id,message,media,ticket_id,created_at,updated_at'])->orderBy('updated_at','DESC')->get();
@@ -134,7 +142,7 @@ class DashboardController extends Controller
             return view('login',compact('offerWallTemplate','appDetails','requestedParams','offerSettings'));
         }
 
-        return view('tickets',compact('offerWallTemplate','appDetails','requestedParams','offerSettings','tickets','unreadTickets'));
+        return view('tickets',compact('offerWallTemplate','appDetails','requestedParams','offerSettings','tickets','unreadTickets','ticketId'));
     }
 
     public function index(Request $request){
