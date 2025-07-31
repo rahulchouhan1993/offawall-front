@@ -104,6 +104,7 @@
       use App\Models\Tracking;
       $skipDuplicate = [];
    @endphp
+   @php $hasAnyofffer = 0; @endphp
    <body>
       <!-- Static page -->
       <div style=" width: 100%;height: 100%;">
@@ -179,6 +180,7 @@
          <div style="display: flex ; height: 100%;  padding-bottom: 60px; align-items: start; width: 100%; flex-direction: column; font-family: Open Sans; background-color:{{ $offerWallTemplate->bodyBg }}">
             <div class="cntmainbx" style="width:100%; display: flex; flex-direction: column; align-items: flex-start; gap: 15px; padding: 60px; padding-bottom: 80px; background: {{ $offerWallTemplate->bodyBg }};">
                @foreach ($allOffers['offers'] as $offer)
+               
                @php if(in_array($offer['id'],$skipDuplicate)) { continue;}else{ $skipDuplicate[] = $offer['id']; } @endphp
                @php
                   $checkIfAlredyCliced = Tracking::where('offer_id',$offer['id'])->where('visitor_id',$cookieValue)->whereNotNull('conversion_id')->first();
@@ -309,6 +311,7 @@
                   $specialOffer = 'is-special-offer';
                }
                @endphp
+               @php $hasAnyofffer = 1; @endphp
                <div class="boxList trigger openPopupDetail {{ $specialOffer }}" 
                 redirect-link="{{ $redirectlink }}" 
                 description='{{ $descriptionOffer }}'
@@ -374,6 +377,10 @@
                </div>
                @endif
                @endforeach
+
+               @if($hasAnyofffer==0)
+                  <div class="notickeavailable"><span>Sorry, no offer available at the moment</span></div>
+               @endif
             </div>
             <div style="padding: 20px 15px; display: flex ; justify-content: space-between; align-items: center; width: 100%; position: fixed; bottom: 0; background-color: {{ $offerWallTemplate->footerBg }}">
                <h2 style="margin: 0; font-size: 11px; font-weight: 600;"><img style="max-width: 150px;" src="/images/logo.png" /></h2>
