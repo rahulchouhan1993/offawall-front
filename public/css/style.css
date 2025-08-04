@@ -239,11 +239,11 @@ aside{width:25%;padding:15px;border-radius:6px;display:flex;flex-direction:colum
 .notickeavailable span {
     padding: 10px 20px;
     border-radius: 5px;
-    box-shadow: 0 0 5px 0 rgba(0,0,0,0.1);
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
     font-size: 15px;
     font-weight: 600;
-    color: #e11d1d;
-    background: #ffd9d9;
+    color: #424242;
+    background: #cfcfcf;
 }
 /* Responsive */
 @media(min-width:1500px){.container{max-width:1440px;}

@@ -379,7 +379,7 @@
                @endforeach
 
                @if($hasAnyofffer==0)
-                  <div class="notickeavailable"><span>Sorry, no offer available at the moment</span></div>
+                  <div class="notickeavailable"><span>Sorry, there are currently no available offers</span></div>
                @endif
             </div>
             <div style="padding: 20px 15px; display: flex ; justify-content: space-between; align-items: center; width: 100%; position: fixed; bottom: 0; background-color: {{ $offerWallTemplate->footerBg }}">
@@ -488,12 +488,37 @@
          </div>
       </div>
 
+      <div class="modal fade cookieDisabledModel" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+         <div class="modal-dialog  modal-dialog-centered">
+            <div class="modal-content">
+            <div class="fraudHeading">
+               <h2>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20ZM11 15H13V17H11V15ZM11 7H13V13H11V7Z"></path></svg>  Cookies Are Disabled
+               </h2>   
+               <h3>It looks like cookies are disabled in your browser. To use all features of this website properly, cookies must be enabled.</h3>
+            </div>
+            <div class="modal-body">
+               <div class="actionReq">
+                  <strong>Action Required:</strong>
+                  <p>Please enable cookies in your browser settings and refresh the page.</p>
+               </div>
+             </div>
+           </div>
+         </div>
+      </div>
+
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
       <!-- Modal -->
       <script>
          var isVpn = '{{ $isVpn }}';
          $(document).ready(function(){
+           
+            if (cookiesEnabled()) {
+               
+            } else {
+               $('.cookieDisabledModel').addClass('show-modal');
+            }
             if(isVpn){
                $('.fraudToolModal').addClass('show-modal');
             }
@@ -525,6 +550,19 @@
          $('.close-button').on('click', function () {
              $('#offerDetailsPop').removeClass('show-modal');
          });
+
+         function cookiesEnabled() {
+            // Try to set a test cookie
+            document.cookie = "cookietest=1; SameSite=Strict";
+            
+            // Check if cookie is readable
+            const cookiesAreEnabled = document.cookie.indexOf("cookietest=") !== -1;
+
+            // Delete the test cookie
+            document.cookie = "cookietest=1; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Strict";
+
+            return cookiesAreEnabled;
+         }
          
       </script>
    </body>

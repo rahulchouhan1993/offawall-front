@@ -366,8 +366,10 @@ class DashboardController extends Controller
     }
 
     public function track(Request $request){
-        if(!isset($_COOKIE['userCookie'])){
-            $this->checkAndSetCookie();
+        if(!isset($_COOKIE['userCookie']) && empty($_COOKIE['userCookie'])){
+            $cookieValNew = $this->checkAndSetCookie();
+        }else{
+            $cookieValNew = $_COOKIE['userCookie'];
         }
         $offerSettings = Setting::find(1);
         $redirectingTo = base64_decode(urldecode($request->query('ufto')));
@@ -379,7 +381,7 @@ class DashboardController extends Controller
             $appDetails = App::where('appId',$appId)->first();
             $userDetails = User::find($appDetails->affiliateId);
             $trackingData = new Tracking();
-            $trackingData->visitor_id = $_COOKIE['userCookie'];
+            $trackingData->visitor_id = $cookieValNew ?? NULL;
             $trackingData->webmaster_id = $request->webmaster_id;
             $trackingData->sub4 = $request->sub4;
             $trackingData->sub5 = $request->sub5;
