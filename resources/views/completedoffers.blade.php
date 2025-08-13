@@ -138,6 +138,13 @@
                 </li>
 
                 @auth
+                <li>
+                     <a href="{{ route('myAccount', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
+                        style="display: block; padding: 14px 10px; font-size: 15px; color: {{ $offerWallTemplate->headerNonActiveTextColor }}; border-bottom: 1px solid transparent; text-decoration: none;font-family: Open Sans;">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M2.00488 9.49979V3.99979C2.00488 3.4475 2.4526 2.99979 3.00488 2.99979H21.0049C21.5572 2.99979 22.0049 3.4475 22.0049 3.99979V9.49979C20.6242 9.49979 19.5049 10.6191 19.5049 11.9998C19.5049 13.3805 20.6242 14.4998 22.0049 14.4998V19.9998C22.0049 20.5521 21.5572 20.9998 21.0049 20.9998H3.00488C2.4526 20.9998 2.00488 20.5521 2.00488 19.9998V14.4998C3.38559 14.4998 4.50488 13.3805 4.50488 11.9998C4.50488 10.6191 3.38559 9.49979 2.00488 9.49979ZM4.00488 7.96755C5.4866 8.7039 6.50488 10.2329 6.50488 11.9998C6.50488 13.7666 5.4866 15.2957 4.00488 16.032V18.9998H20.0049V16.032C18.5232 15.2957 17.5049 13.7666 17.5049 11.9998C17.5049 10.2329 18.5232 8.7039 20.0049 7.96755V4.99979H4.00488V7.96755ZM9.00488 8.99979H15.0049V10.9998H9.00488V8.99979ZM9.00488 12.9998H15.0049V14.9998H9.00488V12.9998Z"></path></svg> My Account
+                     </a>
+                  </li>
+
                   <li>
                      <a href="{{ route('logout', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
                         style="display: block; padding: 14px 10px; font-size: 15px; color: {{ $offerWallTemplate->headerNonActiveTextColor }}; border-bottom: 1px solid transparent; text-decoration: none;font-family: Open Sans;">
@@ -231,10 +238,21 @@
 
                     <div id="descriptionModal_{{$trackingDetails->id}}" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:1000;">
                         <div style="background:#fff; padding:20px; border-radius:10px; width: 800px; max-width: 90%;">
-                            <h3 style="margin-bottom: 20px; font-weight: 600; font-size: 18px; color: #220b10;">Describe your case, so that it helps us to investigate this further.</h3>
+                            <h3 style="margin-bottom: 20px; font-weight: 600; font-size: 18px; color: #220b10;">Describe the problem so we can look into it.</h3>
                             <label for="offer_name_id_{{$trackingDetails->id}}" style="width:100%; margin-right:20px;margin-bottom:5px">Offer Name</label>
                             <input style="margin-bottom: 20px; width: 100%; padding: 14px 13px; border: 1px solid #d6d6d6; font-size: 14px; color: #000; border-radius: 5px;" type="text" id="offer_name_id_{{$trackingDetails->id}}" value="{{ $trackingDetails->offer_name }}" size="50" disabled> <br>
                             <label for="offer_name_id_{{$trackingDetails->id}}" style="margin-right:20px;margin-bottom:5px">Description</label>
+                            <div class="chatwindowAttachement relative flex items-center">
+                                <label for="fileInput_{{$trackingDetails->id}}" class="cursor-pointer flex items-center gap-1 text-black hover:text-[#49FB53]">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15.172 7l-6.586 6.586a2 2 0 002.828 2.828l6.586-6.586A4 4 0 1012 3.172l-6.586 6.586" />
+                                    </svg>
+                                    <!-- <span class="text-[0] md:text-[15px]">Attach</span> -->
+                                </label>
+                                <input id="fileInput_{{$trackingDetails->id}}" data-tracking-id="{{$trackingDetails->id}}" type="file" class="hidden file-input"  />
+                            </div>
                             <textarea id="popupDescription_{{$trackingDetails->id}}" class="w-full flex-1 py-[15px] px-[30px] border-none bg-[#f2f2f2] rounded-[80px] text-[11px] md:text-[15px] text-black focus:outline-none"></textarea> <br>
                             <input type="hidden" id="offer_id_{{$trackingDetails->id}}" value="{{ $trackingDetails->id }}">
                             <div style="text-align: right;">
@@ -363,5 +381,38 @@
             }
         });
     }
+
+    document.querySelectorAll('.file-input').forEach(function (input) {
+    input.addEventListener('change', function () {
+        const file = this.files[0];
+        if (!file) return;
+
+        const trackingId = this.getAttribute('data-tracking-id');
+
+        const formData = new FormData();
+        formData.append('attachment', file);
+        formData.append('_token', '{{ csrf_token() }}');
+
+        fetch('/upload-attachment', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                const imageUrl = data.url;
+
+                $('#popupDescription_' + trackingId)
+                    .summernote('pasteHTML', `<a href="${imageUrl}">Attachment</a><br/>`);    
+            } else {
+                alert('File upload failed');
+            }
+        })
+        .catch(err => {
+            console.error('Upload error:', err);
+            alert('Upload failed.');
+        });
+    });
+});
 </script>
 </html>

@@ -22,10 +22,11 @@
       <meta name="twitter:card" content="summary_large_image">
       <meta name="twitter:title" content="{{ $offerSettings->meta_title }}">
       <meta name="twitter:description" content="{{ $offerSettings->meta_description }}">
+      <meta name="twitter:image" content="/images/favicon.png">
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
       <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
-      <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-      <meta name="twitter:image" content="/images/favicon.png">
+  
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
       <link rel="stylesheet" href="css/style.css?dfgdg">
       <style>
          html{height:100%;}
@@ -106,7 +107,6 @@
    @endphp
    <body>
      <body>
-      
       <!-- Static page -->
       <div style=" width: 100%;height: 100%;">
          <div style="display: flex ; flex-wrap: wrap; align-items: center; width: 100%; background: {{ $offerWallTemplate->headerBg }}; padding: 15px 15px; justify-content: space-between;">
@@ -115,7 +115,7 @@
             </a>
             <div style="display: flex ; align-items: center; justify-content: space-between; padding: 3px 5px; background:{{ $offerWallTemplate->headerMenuBg }}">
                <ul class="menuNav" style="display: flex; align-items: center; justify-content: start; gap: 10px; padding: 0; margin: 0; list-style: none;">
-                  <li>
+                   <li>
                      <a  href="{{ route('offerwall', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
                         style="display: block; padding: 14px 10px; font-size: 15px; color: {{ $offerWallTemplate->headerNonActiveTextColor }}; border-bottom: 1px solid transparent; text-decoration: none;font-family: Open Sans;">
                      Offers
@@ -128,6 +128,7 @@
                      </a>
                   </li>
 
+                  
                </ul>
 
                <div class="dropdown headDropdown">
@@ -137,14 +138,15 @@
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                   @guest
                   <li>
-                     <a class="active" href="{{ route('login', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
-                        style="display: block; padding: 14px 10px; font-size: 15px; border-bottom: 1px solid transparent; text-decoration: none;font-family: Open Sans; background: {{ $offerWallTemplate->headerActiveBg }}">
+                     <a href="{{ route('login', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
+                        style="display: block; padding: 14px 10px; font-size: 15px; color: {{ $offerWallTemplate->headerNonActiveTextColor }}; border-bottom: 1px solid transparent; text-decoration: none;font-family: Open Sans;">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22H18C18 18.6863 15.3137 16 12 16C8.68629 16 6 18.6863 6 22H4ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11Z"></path></svg> Login
                      </a>
                   </li>
+
                   <li>
-                     <a href="{{ route('register', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
-                        style="display: block; padding: 14px 10px; font-size: 15px; color: {{ $offerWallTemplate->headerNonActiveTextColor }}; border-bottom: 1px solid transparent; text-decoration: none;font-family: Open Sans;">
+                     <a class="active" href="{{ route('register', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
+                        style="display: block; padding: 14px 10px; font-size: 15px; border-bottom: 1px solid transparent; text-decoration: none;font-family: Open Sans; background: {{ $offerWallTemplate->headerActiveBg }}">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10 11V8L15 12L10 16V13H1V11H10ZM2.4578 15H4.58152C5.76829 17.9318 8.64262 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C8.64262 4 5.76829 6.06817 4.58152 9H2.4578C3.73207 4.94289 7.52236 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C7.52236 22 3.73207 19.0571 2.4578 15Z"></path></svg> Register
                      </a>
                   </li>
@@ -177,35 +179,27 @@
                </div>
             </div>
          </div>
-
-     
-
-         <!-- SignIn  -->
-
          <div style="display: flex ; height: 100%;  padding-bottom: 60px; align-items: start; width: 100%; flex-direction: column; font-family: Open Sans; background-color:{{ $offerWallTemplate->bodyBg }}">
-         
-            <div class="signupModal">
-               @if(session('success'))
-                  <div class="alert alert-success">
-                     {{ session('success') }}
-                  </div>
-               @endif
-
-               @if ($errors->any())
-                  <div class="alert alert-danger">
-                     <ul>
-                        @foreach ($errors->all() as $error)
-                              <li>{{ $error }}</li>
-                        @endforeach
-                     </ul>
-                  </div>
-               @endif
-               <form action="{{route('loginUser')}}" method="post">
+            <div class="signupModal ">
+             @if(session('success'))
+                   <div class="alert alert-success">
+                      {{ session('success') }}
+                   </div>
+                @endif
+            @if ($errors->any())
+               <div class="alert alert-danger">
+                  <ul>
+                     @foreach ($errors->all() as $error)
+                           <li>{{ $error }}</li>
+                     @endforeach
+                  </ul>
+               </div>
+            @endif
+               <form id="registerForm" action="{{route('store.myaccount')}}" method="post">
                   @csrf
                   <div class="logoLogin">
                      <img src="images/logo.png" alt="img">
                   </div>
-                  
                   <input type="hidden" name="apiKey" value="{{ old('apiKey', $requestedParams['apiKey'] ?? '') }}">
                   <input type="hidden" name="wallId" value="{{ old('wallId', $requestedParams['wallId'] ?? '') }}">
                   <input type="hidden" name="userId" value="{{ old('userId', $requestedParams['userId'] ?? '') }}">
@@ -213,26 +207,41 @@
                   <input type="hidden" name="sub5" value="{{ old('sub5', $requestedParams['sub5'] ?? '') }}">
                   <input type="hidden" name="sub6" value="{{ old('sub6', $requestedParams['sub6'] ?? '') }}">
 
+                  
                   <div class="login-box">
-                     <h2>Log in to get started!</h2>
+                  <h2>Account Information</h2>
+
+                     <div class="input-group">
+                  <i class="fas fa-user"></i>
+                  <input type="text" name="first_name" placeholder="First Name" value="{{ $user->firstName }}" required>
+                  </div>
 
                   <div class="input-group">
-                     <i class="fas fa-envelope"></i>
-                     <input type="email" name="email" value="{{old('email')}}" placeholder="Email">
+                  <i class="fas fa-user"></i>
+                  <input type="text" name="last_name" placeholder="Last Name" value="{{ $user->lastName }}" required>
                   </div>
+
                   <div class="input-group">
-                     <i class="fas fa-lock"></i>
-                     <input type="password"  name="password" value="{{old('password')}}" placeholder="Password">
+                  <i class="fas fa-user"></i>
+                  <input type="text" name="gender" placeholder="Gender" value="{{ $user->gender }}" required>
                   </div>
-                  <div class="options">
-                  <a href="{{ route('forgotPassword', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}">Forgot password?</a>
+                  
+                  <div class="input-group">
+                  <i class="fas fa-user"></i>
+                  <input type="number" name="age" placeholder="Age" value="{{ $user->age }}" required>
                   </div>
-                  <button type="submit" class="login-btn">Login</button><br><br>
-                  <a style="margin-left: 200px;" href="{{ route('register', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}">Register Here</a>
+
+                  <div class="input-group">
+                  <i class="fas fa-envelope"></i>
+                  <input type="email" name="email" placeholder="Email" value="{{ $user->email }}" readonly required>
                   </div>
+
+                  <button type="submit" class="login-btn">Update</button><br><br>
+               </div>
                </form>
             </div>
-            
+
+
             <div style="padding: 20px 15px; display: flex ; justify-content: space-between; align-items: center; width: 100%; position: fixed; bottom: 0; background-color: {{ $offerWallTemplate->footerBg }}">
                <h2 style="margin: 0; font-size: 11px; font-weight: 600;"><img style="max-width: 150px;" src="/images/logo.png" /></h2>
                @if ($offerSettings->privacy_policy==1)
@@ -249,7 +258,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
       
    </body>
-
    <script>
       function handleTicketClick(event) {
          event.preventDefault(); // stop default link navigation

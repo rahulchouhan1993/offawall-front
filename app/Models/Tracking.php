@@ -49,4 +49,8 @@ class Tracking extends Model
     public function ticket(){
         return $this->hasOne(Tickets::class,'tracking_id');
     }
+
+    public function user(){
+        return $this->belongsTo(User::class,'visitor_user_id');
+    }
 }

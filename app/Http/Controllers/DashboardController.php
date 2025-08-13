@@ -132,7 +132,7 @@ class DashboardController extends Controller
 
         $unreadTickets = 0;
         if(Auth::check()){
-            $tickets = Tickets::where('user_id',Auth::user()->id)->with(['tracking:id,offer_name','lastchat:id,message,media,ticket_id,created_at,updated_at'])->orderBy('updated_at','DESC')->get();
+            $tickets = Tickets::where('user_id',Auth::user()->id)->with(['tracking:id,offer_name','lastchat:id,message,media,ticket_id,from,created_at,updated_at'])->orderBy('updated_at','DESC')->get();
 
             $unreadTickets = TicketsChats::whereHas('ticket',function($q){
                 $q->where('user_id',Auth::id());

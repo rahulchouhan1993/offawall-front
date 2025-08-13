@@ -44,6 +44,11 @@ Route::post('/login-user',[AuthController::class,'login'])->name('loginUser');
 
     Route::post('/upload-attachment', [TicketsController::class, 'uploadAttachment']);
 
+    Route::get('/myaccount',[AuthController::class,'myaccount'])->name('myAccount');
+
+    Route::post('/save-my-account',[AuthController::class,'storeMyAccount'])->name('store.myaccount');
+
+    Route::get('/mark-unread/{ticketId}', [ticketsController::class, 'markUnread'])->name('markUnread');
 
 
 // });
