@@ -39,7 +39,7 @@ class ForgotPasswordMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Forgot Password Mail.')
+        return $this->subject('Your Temporary Password for your account')
                     ->view('email.forgot-password')
                     ->with([
                         'user' => $this->user,

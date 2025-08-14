@@ -18,13 +18,13 @@
             <table cellspacing="0" cellpedding="0" width="100%">
                 <tr>
                     <td style="padding: 0 0 20px 0;">
-                        <p style="margin: 1px; font-size: 14px; color: #ffffff;">Hello {{ $user['name'] ?? '' }},</p>
+                        <p style="margin: 1px; font-size: 14px; color: #ffffff;">Hi {{ $user['name'] ?? '' }},</p>
                     </td>
                 </tr>
 
                 <tr>
                     <td style="padding: 0 0 20px 0;">
-                        <p style="margin: 1px; font-size: 14px; color: #ffffff;">You have requested for a new password, please check it below.</p>
+                        <p style="margin: 1px; font-size: 14px; color: #ffffff;">We’ve generated a temporary password for your account to help you sign in securely.</p>
                     </td>
                 </tr>
             </table>
@@ -37,7 +37,7 @@
             <table cellspacing="0" cellpedding="0" width="100%">
                 <tr>
                     <td style="padding: 0 0 20px 0; max-width: 150px;">
-                        <p style="margin: 1px; font-size: 14px; color: #4ef953;">New password:</p>
+                        <p style="margin: 1px; font-size: 14px; color: #4ef953;">Temporary Password:</p>
                     </td>
 
                     <td style="padding: 0 0 20px 0">
@@ -61,13 +61,13 @@
 
                 <tr>
                     <td style="padding: 0 0 20px 0;">
-                        <p style="margin: 1px; font-size: 14px; color: #ffffff;">If you have any questions, feel free to reply to this email. We’re happy to help!</p>
+                        <p style="margin: 1px; font-size: 14px; color: #ffffff;">Please use the above password to log in to your account. For your security, we recommend changing this password immediately after logging in.</p>
                     </td>
                 </tr>
 
                 <tr>
                     <td style="padding: 0 0 20px 0;">
-                        <p style="margin: 1px; font-size: 14px; color: #ffffff;">Warm regards, <br> <span style="color:4ef953; padding-top:8px;display: block;">The Offawall Team</span></p>
+                        <p style="margin: 1px; font-size: 14px; color: #ffffff;">Warm regards, <br> <span style="color:4ef953; padding-top:8px;display: block;">Offawall Team</span></p>
                     </td>
                 </tr>
                 <tr>

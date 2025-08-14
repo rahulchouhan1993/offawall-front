@@ -352,6 +352,13 @@
         const description = $('#popupDescription_'+id).val().trim();
         const offerId = $('#offer_id_'+id).val();
 
+        const file = $('#fileInput_'+id).val();
+
+        if (file === '') {
+            toastr.warning('Please attach an attachment.');
+            return;
+        }
+        
         if (description === '') {
             toastr.warning('Please enter a description.');
             return;

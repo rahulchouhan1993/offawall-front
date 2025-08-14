@@ -123,12 +123,6 @@ class DashboardController extends Controller
         }
 
         $ticketId = 0;
-        if(!isset($requestedParams['offerId'])){
-            $requestedParams['offerId'] = NULL;
-        }
-        else{
-            $ticketId = Tickets::where('tracking_id',$requestedParams['offerId'] ?? NULL)->first()?->id;
-        }
 
         $unreadTickets = 0;
         if(Auth::check()){
@@ -137,6 +131,13 @@ class DashboardController extends Controller
             $unreadTickets = TicketsChats::whereHas('ticket',function($q){
                 $q->where('user_id',Auth::id());
             })->where('from','admin')->where('is_read_user',0)->count();
+
+            if(!isset($requestedParams['offerId'])){
+                $requestedParams['offerId'] = NULL;
+            }
+            else{
+                $ticketId = Tickets::where('tracking_id',$requestedParams['offerId'] ?? NULL)->where('user_id',Auth::id())->first()?->id;
+            }
         }
         else{
             return view('login',compact('offerWallTemplate','appDetails','requestedParams','offerSettings'));
