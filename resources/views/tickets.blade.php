@@ -634,9 +634,9 @@
                 // ✅ Append "Ticket Closed" only if ticket is closed
                 if (data.ticket.status == 2) {
                     const closedBanner = document.createElement('div');
-                    closedBanner.className = 'groupClosed w-full text-[13px] font-[600] text-[#ff5b5b] text-center z-[9]';
+                    closedBanner.className = 'groupClosed w-full text-[10px] font-[600] text-[#ff5b5b] text-center z-[9]';
                     closedBanner.innerHTML = `<br>
-                        <div class="w-auto inline-flex shadow-md bg-white px-[10px] py-[5px] rounded-[4px] mx-auto bg-[]">
+                        <div class="w-auto inline-flex shadow-md px-[10px] py-[5px] rounded-[4px] mx-auto" style="color: #b91c1c; background-color:rgb(250, 186, 186); border: 1px solid #fecaca; width: 140px !important; border-radius: 6px;"">
                             Ticket Closed.
                         </div>
                     `;
