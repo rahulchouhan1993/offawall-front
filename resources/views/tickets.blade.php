@@ -385,7 +385,7 @@
                         </div>
 
                         <div id="waitAdminMessage" style="display: none;" class="chatwindowAreaBx hidden text-center text-sm text-gray-600 p-4 w-full border-t bg-gray-100 z-[999]">
-                            Please wait for the admin to respond.
+                            One of our team member will respond to this ticket shortly.
                         </div>
                         @endif
 
@@ -524,6 +524,19 @@
 
 
 <script>
+
+      document.addEventListener("DOMContentLoaded", function () {
+        var ticket_id = "{{ $ticketId }}";
+        if(ticket_id > 0){
+            var ticketId = ticket_id;
+            loadConversation(ticketId);
+            const url = new URL(window.location.href);
+
+            url.searchParams.delete('offerId');
+
+            window.history.replaceState({}, '', url.toString());
+        }
+    });
 
     function loadConversation(ticketId, element = null) {
         document.getElementById("chatwindowMain").style.removeProperty("display");

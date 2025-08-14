@@ -180,7 +180,7 @@ class AuthController extends Controller
         Mail::to($user->email)->send(new ForgotPasswordMail($user, $request->apiKey, $request->wallId, $request->userId, $request->sub4, $request->sub5, $request->sub6,$newPassword));
 
 
-        return redirect()->back()->with('success','We have sent you an email to reset your password.');
+        return redirect()->back()->with('success','We have sent a new password to your registered email.');
     }
 
 
