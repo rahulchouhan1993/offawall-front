@@ -32,7 +32,7 @@
             <div class="chatMeta flex flex-col items-end">
                 <span class="chatTime">{{$formattedTime}}</span>
                 @if($ticket->status == 2)
-                    <span style="background-color:#dc2626; color:#fff; padding:2px 6px; border-radius:4px; font-size:11px; display:inline-block; margin-top:3px;">
+                    <span style="background-color: #dc2626; color: #fff; padding: 1px 5px; border-radius: 4px; font-size: 10px; display: inline-block; position: absolute; right: 8px; bottom: 5px; font-weight: 600;">
                         Closed
                     </span>
                 @endif
