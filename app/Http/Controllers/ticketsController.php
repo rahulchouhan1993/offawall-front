@@ -122,7 +122,8 @@ class ticketsController extends Controller
 
     public function refreshTickets()
     {
-        $tickets = Tickets::with(['lastchat', 'tracking'])->where('user_id',Auth::id())->orderBy('updated_at','DESC') // adjust relationships
+        $tickets = Tickets::with(['lastchat', 'tracking'])->where('user_id',Auth::id())->orderByRaw('CASE WHEN status = 2 THEN 1 ELSE 0 END ASC')
+        ->orderBy('updated_at', 'DESC') // adjust relationships
                         ->get(); // Apply necessary conditions
 
         return view('ticket-list', compact('tickets'));
