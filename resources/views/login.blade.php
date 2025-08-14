@@ -228,7 +228,8 @@
                   <a href="{{ route('forgotPassword', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}">Forgot password?</a>
                   </div>
                   <button type="submit" class="login-btn">Login</button><br><br>
-                  <a style="margin-left: 200px;" href="{{ route('register', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}">Register Here</a>
+                  <p>Don't have an account? <a style="font-weight: 600" href="{{ route('register', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}">Register Here</a></p>
+                  
                   </div>
                </form>
             </div>
