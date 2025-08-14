@@ -36,6 +36,15 @@
          .cntbx::-webkit-scrollbar-track{background:#f1f1f1;}
          .cntbx::-webkit-scrollbar-thumb{background:#888;}
          .cntbx::-webkit-scrollbar-thumb:hover{background:#555;}
+         .custom-dropdown {
+  position: absolute;
+  min-width: 130px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  z-index: 9999;
+}
          /* mdal */
          .modal{position:fixed;left:0;top:0;width:100%;height:100%;background-color:rgba(0,0,0,0.5);opacity:0;visibility:hidden;transform:scale(1.1);transition:visibility 0s linear 0.25s,opacity 0.25s 0s,transform 0.25s;}
          .modal-content{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background-color:{{ $offerWallTemplate->offerBg }};padding:1rem 1rem;width:94%; max-width: 430px;border-radius:0.5rem;}
@@ -46,6 +55,30 @@
          .trigger { cursor: pointer;}
          .arrow-icon {width: 20px;height: 20px;fill: {{ $offerWallTemplate->offerButtonText }};animation:moveArrow 1s infinite alternate ease-in-out;}
          .is-special-offer { overflow: hidden; position: relative; } .is-special-offer:before { content: 'Featured'; position: absolute; top: 0; left: 0; width: 115px; background: #9b2a2a; background: linear-gradient(90deg,rgba(155, 42, 42, 1) 0%, rgba(0, 0, 0, 1) 69%); text-align: center; color: #fff; padding-top: 25px; font-weight: bold; font-size: 12px; line-height: 28px; transform: rotate(-45deg) translate(-22px, -33px); text-shadow: 0 0 15px #fff; }
+        .chatMeta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* or flex-end if you want right alignment */
+        }
+        .ticket-active {
+            background: linear-gradient(90deg, #f0faff 0%, #d6f0ff 100%);
+            border-left: 4px solid #1d9bf0; /* Nice blue accent */
+            font-weight: 500;
+            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.25s ease-in-out;
+        }
+
+        .ticket-active .chatTitle {
+            color: #1d9bf0; /* Matching accent color for title */
+        }
+
+        .ticket-active .chatDes {
+            color: #444;
+        }
+
+        #myDiv li {
+            transition: background 0.25s ease-in-out, border-left 0.25s ease-in-out;
+        }
          @keyframes moveArrow {
             0% {
             transform: translateX(0);
@@ -172,6 +205,13 @@
 
                   @auth
                   <li>
+                     <a href="{{ route('myAccount', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
+                        style="display: block; padding: 14px 10px; font-size: 15px; color: {{ $offerWallTemplate->headerNonActiveTextColor }}; border-bottom: 1px solid transparent; text-decoration: none;font-family: Open Sans;">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M2.00488 9.49979V3.99979C2.00488 3.4475 2.4526 2.99979 3.00488 2.99979H21.0049C21.5572 2.99979 22.0049 3.4475 22.0049 3.99979V9.49979C20.6242 9.49979 19.5049 10.6191 19.5049 11.9998C19.5049 13.3805 20.6242 14.4998 22.0049 14.4998V19.9998C22.0049 20.5521 21.5572 20.9998 21.0049 20.9998H3.00488C2.4526 20.9998 2.00488 20.5521 2.00488 19.9998V14.4998C3.38559 14.4998 4.50488 13.3805 4.50488 11.9998C4.50488 10.6191 3.38559 9.49979 2.00488 9.49979ZM4.00488 7.96755C5.4866 8.7039 6.50488 10.2329 6.50488 11.9998C6.50488 13.7666 5.4866 15.2957 4.00488 16.032V18.9998H20.0049V16.032C18.5232 15.2957 17.5049 13.7666 17.5049 11.9998C17.5049 10.2329 18.5232 8.7039 20.0049 7.96755V4.99979H4.00488V7.96755ZM9.00488 8.99979H15.0049V10.9998H9.00488V8.99979ZM9.00488 12.9998H15.0049V14.9998H9.00488V12.9998Z"></path></svg> My Account
+                     </a>
+                  </li>
+                  
+                  <li>
                      <a href="{{ route('logout', ['apiKey' => $requestedParams['apiKey'], 'wallId' => $requestedParams['wallId'], 'userId' => $requestedParams['userId'], 'sub4' => $requestedParams['sub4'], 'sub5' => $requestedParams['sub5'], 'sub6' => $requestedParams['sub6']]) }}" 
                         style="display: block; padding: 14px 10px; font-size: 15px; color: {{ $offerWallTemplate->headerNonActiveTextColor }}; border-bottom: 1px solid transparent; text-decoration: none;font-family: Open Sans;">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M2.00488 9.49979V3.99979C2.00488 3.4475 2.4526 2.99979 3.00488 2.99979H21.0049C21.5572 2.99979 22.0049 3.4475 22.0049 3.99979V9.49979C20.6242 9.49979 19.5049 10.6191 19.5049 11.9998C19.5049 13.3805 20.6242 14.4998 22.0049 14.4998V19.9998C22.0049 20.5521 21.5572 20.9998 21.0049 20.9998H3.00488C2.4526 20.9998 2.00488 20.5521 2.00488 19.9998V14.4998C3.38559 14.4998 4.50488 13.3805 4.50488 11.9998C4.50488 10.6191 3.38559 9.49979 2.00488 9.49979ZM4.00488 7.96755C5.4866 8.7039 6.50488 10.2329 6.50488 11.9998C6.50488 13.7666 5.4866 15.2957 4.00488 16.032V18.9998H20.0049V16.032C18.5232 15.2957 17.5049 13.7666 17.5049 11.9998C17.5049 10.2329 18.5232 8.7039 20.0049 7.96755V4.99979H4.00488V7.96755ZM9.00488 8.99979H15.0049V10.9998H9.00488V8.99979ZM9.00488 12.9998H15.0049V14.9998H9.00488V12.9998Z"></path></svg> Logout
@@ -258,19 +298,19 @@
 
 
                         <div id="globalDropdown3" class="custom-dropdown hidden bg-white border rounded shadow-lg z-10">
-                            <ul class="text-sm text-gray-700">
-                                <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Mute</li>
-                                <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Archive</li>
-                                <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-500">Delete</li>
+                            <ul class="text-sm text-gray-700 mb-[0]">
+                                <!-- <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer" onclick="closeTicket()">Close Ticket</li> -->
+                                <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer" onclick="markUnread()">Mark as unread</li>
+                                <!-- <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-500">Delete</li> -->
                             </ul>
                         </div>
 
                     <!-- Chat Window -->
-                    <main class="chatwindowMain">
+                    <main id="chatwindowMain" style="display: none;" class="chatwindowMain">
                         @if(count($tickets) == 0)
                         <div
                             class="chatwindowLogo absolute top-[0] bottom-[0] left-[0] right-[0] m-auto flex flex-col items-center justify-center gap-[25px]">
-                            <div class="min-w-[150px] px-[8px] py-[8px] rounded-[4px] text-[15px] bg-[#f8d7da] text-[#ff001b] text-center border-[1px] border-[#f1aeb5]">No Ticket</div>
+                            <div class="min-w-[150px] px-[8px] py-[8px] rounded-[4px] text-[15px] bg-[#f8d7da] text-[#ff001b] text-center border-[1px] border-[#f1aeb5]">No Tickets</div>
                             <img src="/images/logo.png" alt="img">
                         </div>
                         @endif
@@ -285,10 +325,10 @@
                             </div>
                             @endif
                             <div class="chatwindowDrop relative flex items-center">
-                                <!-- <button  onclick="toggleDropdown3(event)"
+                                <button  onclick="toggleDropdown3(event)"
                                     class="p-[0] w-[35px] h-[35px] flex items-center justify-center text-black rounded-[40px] bg-[#f2f2f2] focus:outline-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-[15px] h-[15px]" viewBox="0 0 24 24" fill="currentColor"><path d="M3 4H21V6H3V4ZM9 11H21V13H9V11ZM3 18H21V20H3V18Z"></path></svg>
-                                </button> -->
+                                </button>
 
                                 <!-- Dropdown Menu (initially hidden) -->
                                 <!-- <div
@@ -342,6 +382,10 @@
                         <!-- Ticket Closed Message -->
                         <div id="chatClosedMessage" style="display: none;" class="chatwindowAreaBx hidden text-center text-sm text-gray-600 p-4 w-full border-t bg-gray-100 z-[999]">
                             This ticket has been closed by the admin. You cannot send further messages.
+                        </div>
+
+                        <div id="waitAdminMessage" style="display: none;" class="chatwindowAreaBx hidden text-center text-sm text-gray-600 p-4 w-full border-t bg-gray-100 z-[999]">
+                            Please wait for the admin to respond.
                         </div>
                         @endif
 
@@ -481,26 +525,20 @@
 
 <script>
 
-    document.addEventListener("DOMContentLoaded", function () {
-        var tickets = @json($tickets); // Correct way to pass PHP array to JS
-        var ticket_id = "{{ $ticketId }}";
-        if(ticket_id > 0){
-            var ticketId = ticket_id;
-            loadConversation(ticketId);
-            const url = new URL(window.location.href);
-
-            url.searchParams.delete('offerId');
-
-            window.history.replaceState({}, '', url.toString());
-        }
-        else if (tickets.length > 0) {
-            var ticketId = tickets[0].id;
-            loadConversation(ticketId);
-        }
-    });
-
-    function loadConversation(ticketId) {
+    function loadConversation(ticketId, element = null) {
+        document.getElementById("chatwindowMain").style.removeProperty("display");
         window.currentTicketId = ticketId;
+
+        // Remove highlight from all
+        document.querySelectorAll('#myDiv li').forEach(li => li.classList.remove('ticket-active'));
+
+        // Highlight the clicked one OR the one matching ticketId
+        if (element) {
+            element.classList.add('ticket-active');
+        } else {
+            let li = document.querySelector(`#ticket-${ticketId}`);
+            if (li) li.classList.add('ticket-active');
+        }
 
         fetch(`/ticketMessages/${ticketId}`)
             .then(response => response.json())
@@ -510,6 +548,7 @@
                 const logo = document.querySelector('.chatwindowLogo img');
                 const inputBar = document.getElementById('chatInputBar');
                 const closedMessage = document.getElementById('chatClosedMessage');
+                const waitAdminMessage = document.getElementById('waitAdminMessage');
 
                 refreshTicketList();
                 // Update chat header
@@ -521,6 +560,12 @@
                 } else {
                     inputBar.style.display = 'flex';
                     closedMessage.style.display = 'none';
+                    waitAdminMessage.style.display = 'none';
+                }
+
+                if (data.ticket.lastchat.from == 'user' && data.ticket.status != 2) {
+                    inputBar.style.display = 'none';
+                    waitAdminMessage.style.display = 'block';
                 }
 
                 // Clear chat area
@@ -593,6 +638,9 @@
             .then(response => response.text())
             .then(html => {
                 document.getElementById('myDiv').innerHTML = html;
+
+                let li = document.querySelector(`#ticket-${window.currentTicketId}`);
+                if (li) li.classList.add('ticket-active');
             });
     }
 
@@ -662,6 +710,27 @@
             alert('Upload failed.');
         });
     });
+
+    function markUnread() {
+        $.ajax({
+            url: '/mark-unread/' + window.currentTicketId,
+            type: 'GET',
+            data: {
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                if (response.success) {
+                    console.log("Last message marked unread");
+                    location.reload();
+                } else {
+                    console.error("Failed to update");
+                }
+            },
+            error: function(xhr) {
+                console.error("AJAX Error:", xhr.responseText);
+            }
+        });
+    }
 </script>
 
 

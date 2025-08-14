@@ -27,11 +27,30 @@ class ticketsController extends Controller
         ]);
 
         $cleanMessage = HtmlCleaner::clean($request->message);
+
+        $dom = new DOMDocument();
+        libxml_use_internal_errors(true); // Suppress HTML5 warnings
+
+        $dom->loadHTML(mb_convert_encoding($cleanMessage, 'HTML-ENTITIES', 'UTF-8'));
+
+        $anchors = $dom->getElementsByTagName('a');
+        foreach ($anchors as $a) {
+            if (!$a->hasAttribute('target')) {
+                $a->setAttribute('target', '_blank');
+            }
+        }
+
+        // Extract only the inner HTML from <body> to avoid <html><body> wrapper
+        $body = $dom->getElementsByTagName('body')->item(0);
+        $finalHtml = '';
+        foreach ($body->childNodes as $child) {
+            $finalHtml .= $dom->saveHTML($child);
+        }
         // Add initial chat
         TicketsChats::create([
             'ticket_id' => $ticket->id,
             'from'      => 'user',
-            'message'   => $cleanMessage,
+            'message'   => $finalHtml,
         ]);
 
         return response()->json([
@@ -42,7 +61,7 @@ class ticketsController extends Controller
 
     public function getChatConversation(Request $request, $ticketId)
     {
-        $ticket = Tickets::with(['tracking:id,offer_name', 'lastchat'])
+        $ticket = Tickets::with(['tracking:id,offer_name,offer_id,click_id,click_time', 'lastchat'])
             ->where('id', $ticketId)
             ->first();
 
@@ -130,6 +149,21 @@ class ticketsController extends Controller
         }
 
         return response()->json(['success' => false], 400);
+    }
+
+    public function markUnread($id){
+        $lastChat = \App\Models\TicketsChats::where('ticket_id', $id)
+        ->orderBy('id', 'desc')->where('from','admin')
+        ->first();
+
+        if ($lastChat) {
+            $lastChat->is_read_user = 0;
+            $lastChat->save();
+
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false]);
     }
     
 }

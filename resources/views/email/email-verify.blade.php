@@ -24,7 +24,7 @@
 
                 <tr>
                     <td style="padding: 0 0 20px 0;">
-                        <p style="margin: 1px; font-size: 14px; color: #ffffff;">We’re thrilled to have you on board! Your account has been successfully created. To get logged in into your account please verify your email by clicking on below link.</p>
+                        <p style="margin: 1px; font-size: 14px; color: #ffffff;">We’re thrilled to have you on board! Your account has been successfully created. To log in into your account please verify your email by clicking the link below</p>
                     </td>
                 </tr>
             </table>
@@ -41,21 +41,9 @@
                     </td>
 
                     <td style="padding: 0 0 20px 0">
-                        <p style="margin: 1px; font-size: 14px; color: #ffffff;"><a href="{{route('email-verify',['user_id' => $user['id'], 'apiKey' => $apiKey, 'wallId' => $wallId, 'userId' => $userId, 'sub4' => $sub4, 'sub5' => $sub5, 'sub6' => $sub6])}}">Click Here</a></p>
+                        <p style="margin: 1px; font-size: 14px; color: #ffffff;"><a href="{{route('email-verify',['user_id' => $user['id'], 'apiKey' => $apiKey, 'wallId' => $wallId, 'userId' => $userId, 'sub4' => $sub4, 'sub5' => $sub5, 'sub6' => $sub6])}}">Click here to verify your email</a></p>
                     </td>
                 </tr>
-
-                <tr>
-                    <td style="padding: 0 0 20px 0; max-width: 150px;">
-                        <p style="margin: 1px; font-size: 14px; color: #4ef953;">Email:</p>
-                    </td>
-
-                    <td style="padding: 0 0 20px 0">
-                        <p style="margin: 1px; font-size: 14px; color: #ffffff;">{{ $user['email'] ?? '' }}</p>
-                    </td>
-                </tr>
-
-               
 
             </table>
         </td>
@@ -66,18 +54,10 @@
     <tr>
         <td style="padding: 25px 25px 25px 25px;">
             <table cellspacing="0" cellpedding="0" width="100%">
-               
-
 
                 <tr>
                     <td style="padding: 0 0 20px 0;">
-                        <p style="margin: 1px; font-size: 14px; color: #ffffff;">If you have any questions, feel free to reply to this email. We’re happy to help!</p>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td style="padding: 0 0 20px 0;">
-                        <p style="margin: 1px; font-size: 14px; color: #ffffff;">Warm regards, <br> <span style="color:4ef953; padding-top:8px;display: block;">The Offawall Team</span></p>
+                        <p style="margin: 1px; font-size: 14px; color: #ffffff;">Best regards, <br> <span style="color:4ef953; padding-top:8px;display: block;">The Offawall Team</span></p>
                     </td>
                 </tr>
                 <tr>

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Mail\ForgotPasswordMail;
 use App\Mail\UserRegisteredMail;
+use App\Models\App;
+use App\Models\Setting;
+use App\Models\Template;
 use App\Models\Tracking;
 use App\Models\User;
 use Carbon\Carbon;
@@ -178,5 +181,95 @@ class AuthController extends Controller
 
 
         return redirect()->back()->with('success','We have sent you an email to reset your password.');
+    }
+
+
+    public function myaccount(Request $request){
+        $offerSettings = Setting::find(1);
+        $advertiserDetails = Setting::find(1);
+        
+
+        $appDetails = App::where('appId',$request->wallId)->where('status',1)->first();
+        $offerWallTemplate = Template::where('app_id',$appDetails->id)->first();
+        if(empty($offerWallTemplate)){
+            $offerWallTemplate = Template::find(1);
+        }
+        $requestedParams = $request->all();
+        if(!isset($requestedParams['userId'])){
+            $requestedParams['userId'] = 0;
+        }
+        if(!isset($requestedParams['sub4'])){
+            $requestedParams['sub4'] = NULL;
+        }
+        if(!isset($requestedParams['sub5'])){
+            $requestedParams['sub5'] = NULL;
+        }
+        if(!isset($requestedParams['sub6'])){
+            $requestedParams['sub6'] = NULL;
+        }
+
+        if(!Auth::check()){
+            return view('login',compact('offerWallTemplate','appDetails','requestedParams','offerSettings'));
+        }
+
+        $user = User::where('id',Auth::id())->first();
+        $name = explode(" ", $user->name);
+        $user->firstName = $name[0] ?? NULL;
+        $user->lastName = $name[1] ?? NULL;
+        return view('myaccount',compact('offerWallTemplate','appDetails','requestedParams','offerSettings','user'));
+    }
+
+
+    public function storeMyAccount(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'first_name'     => ['required', 'string', 'max:255'],
+            'last_name'    => ['nullable', 'string'],
+            'gender' => ['nullable', 'string'],
+            'age' => ['nullable','numeric']
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                         ->withErrors($validator)
+                         ->withInput($request->all());
+        }
+
+        if(!empty($request->last_name)){
+            $name = $request->first_name . ' ' . $request->last_name;
+        }
+        else{
+            $name = $request->first_name;
+        }
+        $data = [
+            'name' => $name,
+            'gender' => $request->gender ?? null,
+            'age' => $request->age
+        ];
+        
+        if(Auth::check()){
+            User::where("id",Auth::id())->update($data);
+
+            return redirect()->route('myAccount', [
+                'apiKey' => $request->apiKey,
+                'wallId' => $request->wallId,
+                'userId' => $request->userId,
+                'sub4' => $request->sub4,
+                'sub5' => $request->sub5,
+                'sub6' => $request->sub6
+            ])->with('success','Account Information Updated.');
+        }
+        else{
+            return redirect()->route('login', [
+                'apiKey' => $request->apiKey,
+                'wallId' => $request->wallId,
+                'userId' => $request->userId,
+                'sub4' => $request->sub4,
+                'sub5' => $request->sub5,
+                'sub6' => $request->sub6
+            ]);
+        }
+
+
     }
 }

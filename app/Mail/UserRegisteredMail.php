@@ -36,7 +36,7 @@ class UserRegisteredMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Please verify your mail.')
+        return $this->subject('Please verify your email.')
                     ->view('email.email-verify')
                     ->with([
                         'user' => $this->user,
