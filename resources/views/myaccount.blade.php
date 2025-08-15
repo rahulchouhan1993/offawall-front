@@ -211,7 +211,7 @@
                   <div class="login-box">
                   <h2>Account Information</h2>
 
-                     <div class="input-group">
+                  <div class="input-group">
                   <i class="fas fa-user"></i>
                   <input type="text" name="first_name" placeholder="First Name" value="{{ $user->firstName }}" required>
                   </div>
@@ -221,19 +221,30 @@
                   <input type="text" name="last_name" placeholder="Last Name" value="{{ $user->lastName }}" required>
                   </div>
 
-                  <div class="input-group">
-                  <i class="fas fa-user"></i>
-                  <input type="text" name="gender" placeholder="Gender" value="{{ $user->gender }}" required>
+                  <div class="mb-3 d-flex align-items-center"
+                        style="background:#f1f1f1;border-radius:25px;overflow:hidden;">
+                     <span class="d-inline-flex justify-content-center align-items-center"
+                           style="height:50px;width:40px;background:#f1f1f1;color:#4ef953;">
+                        <i class="fas fa-user" style="margin-left: 15px;"></i>
+                     </span>
+
+                     <select name="gender" class="form-select flex-grow-1 border-0"
+                              style="background:#f1f1f1;height:50px;">
+                        <option value="" {{ !$user->gender ? 'selected' : '' }}>Select your gender</option>
+                        <option value="Male"   {{ $user->gender=='Male' ? 'selected' : '' }}>Male</option>
+                        <option value="Female" {{ $user->gender=='Female' ? 'selected' : '' }}>Female</option>
+                        <option value="Other"  {{ $user->gender=='Other' ? 'selected' : '' }}>Other</option>
+                     </select>
                   </div>
                   
                   <div class="input-group">
                   <i class="fas fa-user"></i>
-                  <input type="number" name="age" placeholder="Age" value="{{ $user->age }}" required>
+                  <input type="number" name="age" placeholder="Age" value="{{ $user->age }}">
                   </div>
 
                   <div class="input-group">
                   <i class="fas fa-envelope"></i>
-                  <input type="email" name="email" placeholder="Email" value="{{ $user->email }}" readonly required>
+                  <input type="email" name="email" placeholder="Email" value="{{ $user->email }}" readonly>
                   </div>
 
                   <button type="submit" class="login-btn">Update</button><br><br>
